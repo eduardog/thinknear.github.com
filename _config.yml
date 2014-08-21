@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://ThinkNear.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://thinknear.github.io
+title: Thinknear Engineering
+subtitle: Bid Data, High Frequency
+author: Thinknear by Telenav
 simple_search: https://www.google.com/search
 description:
 

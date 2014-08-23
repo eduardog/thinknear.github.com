@@ -16,7 +16,7 @@ rake install
 ```
 * add post (new posts created in: `source/_posts`. [More on directory layout](http://stackoverflow.com/questions/12328828/directory-structure-of-octopress))
 ```shell
-rake new_post["Creating a Github Blog Using Octopress"]
+rake new_post["Creating a Github Blog Using Octopress"] 
 ```
 * generate, preview, iterate, commit
 ```shell

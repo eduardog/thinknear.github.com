@@ -143,3 +143,8 @@ I am always looking for ways to make the development of software and, by extensi
 Aaaaand as I completed this, that lovely chap Dan North just released <a href="https://www.youtube.com/watch?v=XqgwHXsQA1g" target="_blank">this presentation</a>. :-)
 
 Note: This is a modified cross post from one that originally appeared <a href="http://mikquinlan.com/2014/08/14/unnecessary-complexity/" target="_blank">here</a>. 
+
+**About the author**: Mik Quinlan is Director of Engineering - Mobile Advertising at Thinknear by Telenav. He has
+over 16 years experience architecting and implementing highly scalabale, high throughput, low latency systems and
+has led several Agile transformations at various companies. Connect via <a href="https://www.linkedin.com/in/mikquinlan" target="_blank">LinkedIn</a>
+or <a href="https://twitter.com/mikquinlan" target="_blank">Twitter</a>.

@@ -88,7 +88,7 @@ There is nothing wrong with pursuing multiple business strategies, but when it e
 then we end up with a lot of half done ideas that never gain the momentum they're supposed to due to not enough attention 
 being paid to them (market forces notwithstanding).  This then trickles down into design.  Design is hard.  We must 
 make sure we design within our capacity so we build something that will work and work well enough to fulfill the most 
-valueable strategic objectives that we carefully chose.
+valuable strategic objectives that we carefully chose.
 * Keep designs incredibly straight forward wherever possible: Again, not a new concept, yet when on the ground how many 
 times have you looked at a design and thought "that is waaaay too complex"?  More than once, maybe?  Not every edge 
 case needs to be covered.  Work with the business to understand the acceptable levels of failure a system can have.  
@@ -145,6 +145,6 @@ Aaaaand as I completed this, that lovely chap Dan North just released <a href="h
 Note: This is a modified cross post from one that originally appeared <a href="http://mikquinlan.com/2014/08/14/unnecessary-complexity/" target="_blank">here</a>. 
 
 **About the author**: Mik Quinlan is Director of Engineering - Mobile Advertising at Thinknear by Telenav. He has
-over 16 years experience architecting and implementing highly scalabale, high throughput, low latency systems and
+over 16 years experience architecting and implementing highly scalable, high throughput, low latency systems and
 has led several Agile transformations at various companies. Connect via <a href="https://www.linkedin.com/in/mikquinlan" target="_blank">LinkedIn</a>
 or <a href="https://twitter.com/mikquinlan" target="_blank">Twitter</a>.

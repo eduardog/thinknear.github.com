@@ -12,8 +12,9 @@ git clone git@github.com:ThinkNear/thinknear.github.com.git
 cd thinknear.github.com
 rvm install ruby-2.0.0-p481
 bundle install
-rake install (-> note, if it asks if a theme is present and to overwrite, say no as rake has already been installed.)
+rake install
 ```
+Note: For rake install if it asks if a theme is present and to overwrite, say no as rake has already been installed.
 * add post (new posts created in: `source/_posts`. [More on directory layout](http://stackoverflow.com/questions/12328828/directory-structure-of-octopress))
 ```shell
 rake new_post["Creating a Github Blog Using Octopress"] 

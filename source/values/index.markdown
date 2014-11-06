@@ -2,7 +2,7 @@
 layout: page
 title: "About us"
 date: 2014-11-05 14:17
-comments: true
+comments: false
 sharing: true
 footer: true
 ---

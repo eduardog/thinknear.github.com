@@ -15,6 +15,7 @@ You can visit the project's [GitHub page](https://github.com/ThinkNear/aws_templ
 ## Motivation
 Thinknear's Elastic Beanstalk environments are low-latency, high-throughput systems serving billions of auction requests per day from dozens of exchanges.
 The `aws_templates` works with Beanstalk's `.ebextensions` to configure EC2 instances with
+
 * RAID 0 
 * log rotation to AWS S3 using [tn_s3_file_uploader](https://github.com/ThinkNear/tn_s3_file_uploader)
 * collectd and JMX remote monitoring

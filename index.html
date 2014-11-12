@@ -100,12 +100,16 @@ aws_templates is an example deployment and configuration &hellip;">
 <h2>Motivation</h2>
 
 <p>Thinknear&rsquo;s Elastic Beanstalk environments are low-latency, high-throughput systems serving billions of auction requests per day from dozens of exchanges.
-The <code>aws_templates</code> works with Beanstalk&rsquo;s <code>.ebextensions</code> to configure EC2 instances with
-* RAID 0
-* log rotation to AWS S3 using <a href="https://github.com/ThinkNear/tn_s3_file_uploader">tn_s3_file_uploader</a>
-* collectd and JMX remote monitoring
-* AWS ELB configuration
-* Custom system settings</p>
+The <code>aws_templates</code> works with Beanstalk&rsquo;s <code>.ebextensions</code> to configure EC2 instances with</p>
+
+<ul>
+<li>RAID 0</li>
+<li>log rotation to AWS S3 using <a href="https://github.com/ThinkNear/tn_s3_file_uploader">tn_s3_file_uploader</a></li>
+<li>collectd and JMX remote monitoring</li>
+<li>AWS ELB configuration</li>
+<li>Custom system settings</li>
+</ul>
+
 
 <p>This project is intended to share a method of deployment and configuration using a collection of scripts and Beanstalk&rsquo;s <code>.ebextensions</code>.</p>
 

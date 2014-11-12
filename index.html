@@ -9,8 +9,8 @@
   <meta name="author" content="Thinknear by Telenav">
 
   
-  <meta name="description" content="Our system Thinknear&rsquo;s Real Time Bidding service is built on AWS Elastic Beanstalk.
-We run around one-hundred instances to serve billions of &hellip;">
+  <meta name="description" content="Announcement Thinknear is releasing our aws_templates as an open-source project under APLv2.
+aws_templates is an example deployment and configuration &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,6 +59,7 @@ We run around one-hundred instances to serve billions of &hellip;">
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
+  <li><a href="/values">About us</a></li>
   <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
@@ -67,6 +68,103 @@ We run around one-hundred instances to serve billions of &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/11/aws-templates-released/">Aws_templates Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-11T14:45:14-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:45 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Announcement</h2>
+
+<p>Thinknear is releasing our <code>aws_templates</code> as an open-source project under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">APLv2</a>.
+<code>aws_templates</code> is an example deployment and configuration setup for <a href="http://aws.amazon.com/elasticbeanstalk/">AWS Elastic Beanstalk</a>.</p>
+
+<p>You can visit the project&rsquo;s <a href="https://github.com/ThinkNear/aws_templates">GitHub page</a>. The README has more information on the features and behavior of the configuration.</p>
+
+<h2>Motivation</h2>
+
+<p>Thinknear&rsquo;s Elastic Beanstalk environments are low-latency, high-throughput systems serving billions of auction requests per day from dozens of exchanges.
+The <code>aws_templates</code> works with Beanstalk&rsquo;s <code>.ebextensions</code> to configure EC2 instances with
+* RAID 0
+* log rotation to AWS S3 using <a href="https://github.com/ThinkNear/tn_s3_file_uploader">tn_s3_file_uploader</a>
+* collectd and JMX remote monitoring
+* AWS ELB configuration
+* Custom system settings</p>
+
+<p>This project is intended to share a method of deployment and configuration using a collection of scripts and Beanstalk&rsquo;s <code>.ebextensions</code>.</p>
+
+<h2>Contribute</h2>
+
+<p>Thinknear Engineering would like to invite anyone who finds <code>aws_templates</code> useful to contribute to the project. Visit the project&rsquo;s <a href="https://github.com/ThinkNear/aws_templates/issues">issue tracker page</a> to submit questions, bugs, or new features.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/11/tn-s3-file-uploader-released/">Tn_s3_file_uploader Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-11T13:01:58-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:01 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Announcement</h2>
+
+<p>Thinknear is delighted to announce that our <code>tn_s3_file_uploader</code> is released as open-source under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">APLv2</a>. <code>tn_s3_file_uploader</code> is a Ruby gem that we use internally to upload log files to Amazon S3 where they can be stored until we need to retrieve them for further analysis or processing.</p>
+
+<p>You can visit the gem&rsquo;s page on <a href="https://rubygems.org/gems/tn_s3_file_uploader">Ruby Gems</a>. Please, visit the project&rsquo;s <a href="https://github.com/ThinkNear/tn_s3_file_uploader/wiki/Getting-started">getting-started page</a> for more information on how to install and use the gem.</p>
+
+<h2>Motivation</h2>
+
+<p>Thinknear&rsquo;s <a href="http://en.wikipedia.org/wiki/Real-time_bidding">Real Time Bidding</a> service produces billions of log entries per day and we have set up a simple but robust pipeline around rotating those logs and storing them on <a href="http://aws.amazon.com/s3/">Amazon S3</a>. The two key parts of this pipeline have been released to the public as open-source software.</p>
+
+<p>First our <a href="http://aws.amazon.com/elasticbeanstalk/?sc_channel=PS&amp;sc_campaign=beanstalk_awns&amp;sc_publisher=google&amp;sc_medium=beanstalk_b&amp;sc_content=elastic_beanstalk_e&amp;sc_detail=amazon%20elastic%20beanstalk&amp;sc_category=beanstalk&amp;sc_segment=177&amp;sc_matchtype=e&amp;sc_country=US&amp;s_kwcid=AL!4422!3!50999240322!e!!g!!amazon%20elastic%20beanstalk&amp;ef_id=VCxP0QAABUt7hwuO:20141111211834:s">AWS Elastic Beanstalk</a> <a href="https://github.com/ThinkNear/aws_templates">logrotate and config scripts</a> rotates the logs produced by our service.</p>
+
+<p>Second the aforementioned ruby gem uploads the rotated logs on S3 with a year/month/day/hour <a href="https://github.com/ThinkNear/tn_s3_file_uploader/wiki/Getting-started#partition-uploaded-files-based-on-date">partitioned destination path</a> that makes it easy to retrieve and analyze the logs for a specific period of time.</p>
+
+<h2>Contribute</h2>
+
+<p>Thinknear Engineering values the openness of the open source software model and we would like to invite anyone that finds <code>tn_s3_file_uploader</code> useful to contribute. Visit the <a href="https://github.com/ThinkNear/tn_s3_file_uploader/issues">project&rsquo;s issue tracker page</a> to submit questions, bugs or new features.</p>
+
+<p>If you want to hack around the code, <a href="https://github.com/ThinkNear/tn_s3_file_uploader/fork">fork the project on GitHub</a> and see the <a href="https://github.com/ThinkNear/tn_s3_file_uploader/wiki/Contribute">how to contribute page</a> if you want to submit your code to the project.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -486,6 +584,14 @@ distributed systems&#8217; engineers. We are really excited about what we do, an
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/11/aws-templates-released/">Aws_templates Released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/11/tn-s3-file-uploader-released/">Tn_s3_file_uploader Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/21/monitoring-beanstalk-with-collectd/">Monitoring Beanstalk With Collectd</a>
       </li>
     
@@ -516,6 +622,19 @@ distributed systems&#8217; engineers. We are really excited about what we do, an
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

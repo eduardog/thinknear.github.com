@@ -3,6 +3,22 @@
   
   
   <url>
+    <loc>http://engineering.thinknear.com/blog/2014/11/11/aws-templates-released/</loc>
+    
+    <lastmod>2014-11-11T14:45:14-08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://engineering.thinknear.com/blog/2014/11/11/tn-s3-file-uploader-released/</loc>
+    
+    <lastmod>2014-11-11T13:01:58-08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://engineering.thinknear.com/blog/2014/10/21/monitoring-beanstalk-with-collectd/</loc>
     
     <lastmod>2014-10-21T17:51:02-07:00</lastmod>
@@ -29,16 +45,23 @@
   
   <url>
     <loc>http://engineering.thinknear.com/blog/archives/</loc>
-    <lastmod>2014-11-04T11:55:48-08:00</lastmod>
+    <lastmod>2014-11-11T17:15:04-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://engineering.thinknear.com/</loc>
-    <lastmod>2014-11-04T11:55:48-08:00</lastmod>
+    <lastmod>2014-11-11T17:15:04-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://engineering.thinknear.com/values/</loc>
+    <lastmod>2014-11-11T17:15:04-08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   
   

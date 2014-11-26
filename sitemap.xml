@@ -3,6 +3,14 @@
   
   
   <url>
+    <loc>http://engineering.thinknear.com/blog/2014/11/25/presenting-at-reinvent/</loc>
+    
+    <lastmod>2014-11-25T16:07:43-08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://engineering.thinknear.com/blog/2014/11/11/aws-templates-released/</loc>
     
     <lastmod>2014-11-11T14:45:14-08:00</lastmod>
@@ -45,21 +53,21 @@
   
   <url>
     <loc>http://engineering.thinknear.com/blog/archives/</loc>
-    <lastmod>2014-11-11T17:47:14-08:00</lastmod>
+    <lastmod>2014-11-26T10:52:58-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://engineering.thinknear.com/</loc>
-    <lastmod>2014-11-11T17:47:14-08:00</lastmod>
+    <lastmod>2014-11-26T10:52:58-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://engineering.thinknear.com/values/</loc>
-    <lastmod>2014-11-11T17:47:14-08:00</lastmod>
+    <lastmod>2014-11-26T10:52:58-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

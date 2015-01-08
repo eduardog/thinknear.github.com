@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Advanced Angular UI Router Part I: Nested Views - Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="At ThinkNear, we have an in-house administrative dashboard that our ad operations team uses to set up and manage ad campaigns.
+The dashboard is an &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/blog/2015/01/07/advanced-angular-ui-router-part-i">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1><a href="/"><img src="/images/LOGO_Thinknear_PNG_engineer_201408.png" alt="Thinknear Engineering" /></a></h1>
+  
+    <h2>Bid Data, High Frequency</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/values">About us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Advanced Angular UI Router Part I: Nested Views</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-07T13:18:03-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>At ThinkNear, we have an in-house administrative dashboard that our ad operations team uses to set up and manage ad campaigns.
+The dashboard is an AngularJS frontend with a Ruby on Rails backend, with the
+ <a href="https://github.com/angular-ui/ui-router">ui-router</a> plugin for permalinks and navigation.
+While ngNewsletter&rsquo;s <a href="http://www.ng-newsletter.com/posts/angular-ui-router.html">Diving deep into the AngularUI Router</a> was a helpful primer, while creating the system we found it didn&rsquo;t go deep enough.
+This post describes how we used ui-router&rsquo;s Nested Views feature to achieve the site layout we wanted.</p>
+
+<h3>Background</h3>
+
+<p>Our object hierarchy goes Contract > Insertion Order > Campaign.
+We have many Contracts, Contracts can have many Insertion Orders, and Insertion Orders can have many Campaigns.
+Ad Ops often needed to reference one object while working on another.
+They preferred to open multiple tabs or browser windows and look at them side-by-side.
+They need an easy way to open multiple Contract tabs from the main list, and a good single-Contract view.
+They wanted to be able to use the back button to go up the hierarchy.
+And they wanted to be able to pass around short links to specific objects that loaded quickly.</p>
+
+<p>Here is the page structure we came up with:</p>
+
+<p>Contract List View:</p>
+
+<pre><code>[Site Header]
+  [Contract Section Header]
+    [Contract1]
+    [Contract2]
+    …
+[Site Footer]
+</code></pre>
+
+<p>Contract Detail View:</p>
+
+<pre><code>[Site Header]
+  [Contract Section Header]
+    [Contract 1 Header]
+      [Back to List button]
+    [Contract 1 Details]
+      [Contract 1 Insertion Order 1]
+      [Contract 1 Insertion Order 2]
+        …
+[Site Footer]
+</code></pre>
+
+<p>Insertion Order Detail View:</p>
+
+<pre><code>[Site Header]
+  [Contract Section Header]
+    [Insertion Order 1 Header]
+      [Back to Contract button]
+    [Insertion Order 1 Details]
+      [Insertion Order 1 Campaign 1]
+      [Insertion Order 1 Campaign 1]
+      …
+[Site Footer]
+</code></pre>
+
+<p>Campaign Detail View:</p>
+
+<pre><code>[Site Header]
+  [Contract Section Header]
+    [Campaign 1 Header]
+      [Back to Insertion Order button]
+    [Campaign 1 Details]
+[Site Footer]
+</code></pre>
+
+<p>And here&rsquo;s the URL structure for permalinks:</p>
+
+<ul>
+<li>/contracts - List</li>
+<li>/contracts/new - New contract</li>
+<li>/contracts/1 - Contract 1 details</li>
+<li>/contracts/insertion_orders/new - New insertion order</li>
+<li>/contracts/insertion_orders/1 - Insertion order 1 details</li>
+<li>/contracts/campaigns/new - New campaign</li>
+<li>/contracts/campaigns/1 - Campaign 1 details</li>
+</ul>
+
+
+<p>Once states are set up, UI Router handles permalinks and back button support.
+The tricky part was organizing the states to get both the permalinks and site layout we wanted.
+The flat permalinks were important not only for URL length, but to improve load speed by not requesting all of an object&rsquo;s parents.</p>
+
+<p>We tried nesting the states but using absolute URL patterns to flatten the URL structure:</p>
+
+<pre><code>.state('contracts', { 
+  url: "/contracts" 
+})
+.state('contracts.contract_selected', { 
+  url: "/{contract_id:[0-9]+}"
+})
+.state('contracts.contract_selected.insertion_order_selected', { 
+  url: "^/contracts/insertion_orders/{insertion_order_id:[0-9]+}"
+  // Absolute URL with no contract ID
+})
+</code></pre>
+
+<p>Unfortunately, this doesn&rsquo;t work because UI router requires the <code>contract_id</code> be present for the parent state!
+So we structured the states to mirror our permalink structure:</p>
+
+<pre><code>.state('contracts', { 
+  url: "/contracts" 
+})
+.state('contracts.contract_selected', { 
+  url: "/{contract_id:[0-9]+}"
+})
+.state('contracts.insertion_order_selected', { 
+  url: "/insertion_orders/{insertion_order_id:[0-9]+}"
+})
+</code></pre>
+
+<p>To get the site layout we wanted, we took advantage of UI Router&rsquo;s <a href="https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views">named views</a>.
+Named views allow you to have DOM elements from child states replace DOM elements from parents.
+If you declare a state with the <code>templateUrl</code> and <code>controller</code> at the top level,
+it will implicitly insert it in an un-named <code>ui-view</code> element in the parent.
+But if you declare a <code>views</code> property in your state, you can name views, and specify where in the hierarchy they should be inserted.</p>
+
+<h3>Ui-Router Templates and States</h3>
+
+<p>Here&rsquo;s the final structure of states and templates:</p>
+
+<h5>Main Site Template</h5>
+
+<p>This was a static template, no dynamic content.</p>
+
+<pre><code>&lt;div class="header"&gt;Site Header&lt;/div&gt;
+&lt;div ui-view&gt;&lt;/div&gt;
+&lt;div class="footer"&gt;Footer&lt;/div&gt;
+</code></pre>
+
+<h4>Contract Section</h4>
+
+<h5>State</h5>
+
+<pre><code>.state('contracts', {
+  url: "/contracts",
+  abstract: true,
+  views: {
+    "": {
+      controller: 'ContractSectionController',
+      templateUrl: 'contracts/index.html'
+    },
+  },
+})
+</code></pre>
+
+<h5>Template</h5>
+
+<pre><code>&lt;div class="header"&gt;Contract Section Header&lt;/div&gt;
+&lt;div ui-view="main"&gt;&lt;/div&gt;
+</code></pre>
+
+<h4>Contract List</h4>
+
+<p>This is the state that shows a list of all contracts.</p>
+
+<h5>State</h5>
+
+<p>When a state&rsquo;s parent is abstract, setting the URL matcher to an empty string means that it will automatically go to this child state when you enter the URL for the parent.
+Set up like this, going to <code>http://root.com/#/contracts</code> will take you to the contracts.list state:</p>
+
+<pre><code>.state('contracts.list', {
+    url: "",
+    views: {
+        "main@contracts": {
+            controller: 'ContractListController',
+            templateUrl: 'contracts/list.html'
+        }
+    }
+})
+</code></pre>
+
+<h5>Template</h5>
+
+<pre><code>&lt;div class="list"&gt;
+    &lt;div ng-repeat="item in list"&gt;
+        &lt;!-- list item content --&gt;
+    &lt;/div&gt;
+    &lt;div class="pagination"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4>Contract Details</h4>
+
+<p>This is the state that shows a single contract.
+It also functions as the permalink for that contract.</p>
+
+<h5>Single Item Template</h5>
+
+<p>Our single-item views had common elements, so we extracted those into a details template.</p>
+
+<pre><code>&lt;div class="detail-header"&gt;Item Header Content&lt;/div&gt;
+&lt;div ui-view="details"&gt;&lt;/div&gt;
+</code></pre>
+
+<h5>Contract Detail Template</h5>
+
+<p>This is shared by the existing item and new item states.</p>
+
+<pre><code>&lt;div class="contract"&gt;
+    &lt;!-- contract stuff goes here --&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h5>Contract Detail and New Contract State</h5>
+
+<p>Here you can see named views in action.
+<code>main@contracts</code> inserts the Single Item template into <code>&lt;div ui-view="main"&gt;</code>, replacing the list.
+Then <code>details@contracts.contract_selected</code> inserts the Contract Detail template into <code>&lt;div ui-view="details"&gt;</code>.
+The url matcher for <code>contract_selected</code> uses UI Router&rsquo;s <a href="https://github.com/angular-ui/ui-router/wiki/URL-Routing#basic-parameters">curly brace syntax</a> to specify a regex for <code>contract_id</code>, to prevent it from matching on the <code>/new</code> we use for new contracts.</p>
+
+<pre><code>.state('contracts.contract_selected', {
+    url: "/{contract_id:[0-9]+}",
+    views: {
+        "main@contracts": {
+            controller: 'SingleItemController',
+            templateUrl: 'contracts/single_item.html'
+        },
+        'details@contracts.contract_.selected', {
+            controller: 'ContractDetailController',
+            templateUrl: 'contracts/detail.html
+        }
+    }
+})
+</code></pre>
+
+<p>The new contract state is almost identical, but since we don&rsquo;t have an ID until the contract is saved, it matches on <code>/new</code>.</p>
+
+<pre><code>.state('contracts.contract_new', {
+    url: "/new",
+    …
+})
+</code></pre>
+
+<h4>Insertion Order and Campaign Details</h4>
+
+<p>The Insertion Order and Campaign Detail states look just like Contract Detail State.</p>
+
+<pre><code>.state('contracts.insertion_order_selected', {
+    url: "/{insertion_order_id:[0-9]+}",
+    views: {
+        "main@contracts": {
+            controller: 'SingleItemController',
+            templateUrl: 'contracts/single_item.html'
+        },
+        'details@contracts.insertion_order_selected', {
+            controller: 'InsertionOrderDetailController',
+            templateUrl: 'insertion_orders/detail.html
+        }
+    }
+})
+.state('contracts.campaign_selected', {
+    url: "/{campaign_id:[0-9]+}",
+    views: {
+        "main@contracts": {
+            controller: 'SingleItemController',
+            templateUrl: 'contracts/single_item.html'
+        },
+        'details@contracts.campaign_selected', {
+            controller: 'CampaignDetailController',
+            templateUrl: 'campaigns/detail.html
+        }
+    }
+})
+</code></pre>
+
+<h3>Conclusion and Next Steps</h3>
+
+<p>So that&rsquo;s how to use UI Router to display drill-down views for nested models.
+Key takeaways:</p>
+
+<ul>
+<li>If you use state parameters, your state structure will need to mirror your permalink structure.</li>
+<li>Use named views to replace content from a parent state.</li>
+</ul>
+
+
+<p>You may still have some questions, such as:</p>
+
+<ul>
+<li>How do you get the data into the controllers?</li>
+<li>Why isn&rsquo;t <code>contracts/single_item.html</code> part of an abstract parent state that the other detail views inherit from?</li>
+</ul>
+
+
+<p>Those will be answered in the next part, UI Router Resolves.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Thinknear by Telenav</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-07T13:18:03-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:18 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.thinknear.com/blog/2015/01/07/advanced-angular-ui-router-part-i/" data-via="" data-counturl="http://engineering.thinknear.com/blog/2015/01/07/advanced-angular-ui-router-part-i/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/06/heroku-cost-savings-using-generic-workers/" title="Previous Post: Heroku cost optimization using generic workers">&laquo; Heroku cost optimization using generic workers</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/06/heroku-cost-savings-using-generic-workers/">Heroku Cost Optimization Using Generic Workers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/presenting-at-reinvent/">Presenting at re:Invent</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/11/aws-templates-released/">Aws_templates Released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/11/tn-s3-file-uploader-released/">Tn_s3_file_uploader Released</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.thinknear.com/blog/2015/01/07/advanced-angular-ui-router-part-i/';
+        var disqus_url = 'http://engineering.thinknear.com/blog/2015/01/07/advanced-angular-ui-router-part-i/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

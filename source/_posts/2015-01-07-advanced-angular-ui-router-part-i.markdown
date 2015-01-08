@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Advanced Angular UI Router Part I: Nested Views"
-date: 2015-01-06 13:18:03 -0800
+date: 2015-01-07 13:18:03 -0800
 comments: true
 categories: 
 ---

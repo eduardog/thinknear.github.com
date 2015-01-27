@@ -15,6 +15,7 @@ Pros:
 2. Ad-hoc analysis is easier.
    - The learning curve to use redshift is much less than hive/hadoop. For our business and data analysts it was often extra overhead to explain and understand hadoop clusters worked. 
    - Redshift has also been much less surprising so far. Hive has some limitations with more advanced queries that we have not seen with Redshift.
+<!-- more -->
 3. No longer dealing with EMR/Hadoop versions
    - A lot of issues we had with EMR was with new versions of hadoop/EMR. Things would break with bad builds or different performance characteristics and they were often a pain to deal with. It seems with Redshift more of this is abstracted away and we haven’t had to deal with any of these types of issues.
 4. Cost

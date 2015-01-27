@@ -12,6 +12,7 @@ The dashboard is an AngularJS frontend with a Ruby on Rails backend, with the
 While ngNewsletter's [Diving deep into the AngularUI Router](http://www.ng-newsletter.com/posts/angular-ui-router.html) was a helpful primer, while creating the system we found it didn't go deep enough.
 This post describes how we used ui-router's Nested Views feature to achieve the site layout we wanted.
 
+<!-- more -->
 
 ### Background
 

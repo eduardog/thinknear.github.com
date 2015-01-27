@@ -23,6 +23,8 @@ have an impact on our productivity and agility.  Everybody talks about keeping i
 this is nothing new.  It is how we can achieve this when making those decisions on the ground that is the focus of this 
 blog.
 
+<!-- more -->
+
 There are at least five major areas where we love to introduce complexity: feature development, execution, design, 
 technology selection and code.
 

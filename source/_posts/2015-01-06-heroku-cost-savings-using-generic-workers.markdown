@@ -15,6 +15,8 @@ working on multiple jobs concurrently.
 According to Sidekiq's main developer, Mike Perham, one large Resque farm with a 68GB RAM footprint can be brought down to 1 GB RAM by using threads instead of processes. 
 [<a href="https://github.com/mperham/sidekiq/wiki/Internals" target="_blank">*source*</a>]
 
+<!-- more -->
+
 We analyzed the distribution of background jobs across dynos. 
 We use a family of dynos for each queue, running up to 50 dynos per queue and different families being on for 750 hours per month at the low end, and up to to 40,000 hours 
 per month at the high end.

@@ -4,7 +4,7 @@
   <title><![CDATA[Thinknear Engineering]]></title>
   <link href="http://engineering.thinknear.com/atom.xml" rel="self"/>
   <link href="http://engineering.thinknear.com/"/>
-  <updated>2015-01-21T14:27:42-08:00</updated>
+  <updated>2015-01-27T15:25:39-08:00</updated>
   <id>http://engineering.thinknear.com/</id>
   <author>
     <name><![CDATA[Thinknear by Telenav]]></name>
@@ -36,6 +36,13 @@
 <li>Redshift has also been much less surprising so far. Hive has some limitations with more advanced queries that we have not seen with Redshift.</li>
 </ul>
 </li>
+</ol>
+
+
+<!-- more -->
+
+
+<ol>
 <li>No longer dealing with EMR/Hadoop versions
 
 <ul>
@@ -108,6 +115,9 @@ The dashboard is an AngularJS frontend with a Ruby on Rails backend, with the
  <a href="https://github.com/angular-ui/ui-router">ui-router</a> plugin for permalinks and navigation.
 While ngNewsletter&rsquo;s <a href="http://www.ng-newsletter.com/posts/angular-ui-router.html">Diving deep into the AngularUI Router</a> was a helpful primer, while creating the system we found it didn&rsquo;t go deep enough.
 This post describes how we used ui-router&rsquo;s Nested Views feature to achieve the site layout we wanted.</p>
+
+<!-- more -->
+
 
 <h3>Background</h3>
 
@@ -403,6 +413,9 @@ working on multiple jobs concurrently.
 According to Sidekiq&rsquo;s main developer, Mike Perham, one large Resque farm with a 68GB RAM footprint can be brought down to 1 GB RAM by using threads instead of processes.
 [<a href="https://github.com/mperham/sidekiq/wiki/Internals" target="_blank"><em>source</em></a>]</p>
 
+<!-- more -->
+
+
 <p>We analyzed the distribution of background jobs across dynos.
 We use a family of dynos for each queue, running up to 50 dynos per queue and different families being on for 750 hours per month at the low end, and up to to 40,000 hours
 per month at the high end.</p>
@@ -537,6 +550,9 @@ For example, we want to know when:</p>
 <p>Tracking memory, CPU and network statistics are key to meeting these goals and making sound decisions.
 But we don&rsquo;t stop there.
 There are multitudes of metrics to track.</p>
+
+<!-- more -->
+
 
 <h2>Measure everything</h2>
 
@@ -679,6 +695,8 @@ from those more-complex-than-it-needs-to-be features to irreversible design deci
 have an impact on our productivity and agility.  Everybody talks about keeping it simple and taking a lean approach -
 this is nothing new.  It is how we can achieve this when making those decisions on the ground that is the focus of this
 blog.</p>
+
+<p><!-- more --></p>
 
 <p>There are at least five major areas where we love to introduce complexity: feature development, execution, design,
 technology selection and code.</p>

@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="Our system Thinknear&rsquo;s Real Time Bidding service is built on AWS Elastic Beanstalk.
+We run around one-hundred instances to serve billions of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/posts/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1><a href="/"><img src="/images/LOGO_Thinknear_PNG_engineer_201408.png" alt="Thinknear Engineering" /></a></h1>
+  
+    <h2>Bid Data, High Frequency</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/values">About us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/21/monitoring-beanstalk-with-collectd/">Monitoring Beanstalk With Collectd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-21T17:51:02-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>5:51 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Our system</h2>
+
+<p>Thinknear&rsquo;s <a href="http://en.wikipedia.org/wiki/Real-time_bidding">Real Time Bidding</a> service is built on <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html">AWS Elastic Beanstalk</a>.
+We run around one-hundred instances to serve billions of auctions a day.
+The system must be highly available, performant and maintain high success rates.
+Operationally, engineers must be able to ship code throughout the week and change configurations without disrupting service.
+We make data driven decisions to meet these standards by using metrics gathering systems like <a href="https://collectd.org/">collectd</a>.</p>
+
+<blockquote><p>If you don&rsquo;t know where you are going, you&rsquo;ll end up someplace else &ndash; Yogi Berra</p></blockquote>
+
+<p>If you run your services in the cloud, then you know there is a risk of overpaying.
+There are a lot of factors that go into your cloud’s cost.
+For example, we want to know when:</p>
+
+<ul>
+<li>We are under-utilizing instances.</li>
+<li>Hosts are suffering from <a href="http://blog.scoutapp.com/articles/2013/07/25/understanding-cpu-steal-time-when-should-you-be-worried">steal time</a>.</li>
+<li>We need a instance type that better suits our needs.</li>
+</ul>
+
+
+<p>Tracking memory, CPU and network statistics are key to meeting these goals and making sound decisions.
+But we don&rsquo;t stop there.
+There are multitudes of metrics to track.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/21/monitoring-beanstalk-with-collectd/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/22/unnecessary-complexity/">Unnecessary Complexity</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-22T17:20:18-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:20 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div align="center">
+&#8220;Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius — and a lot of courage — to move in the opposite direction.&#8221; - Einstein
+</div>
+
+
+<p><p/>
+Software development is hard.  That&rsquo;s a fact.  Not only do we have a product that we must enhance, develop from scratch,
+or even maintain, but we have people&rsquo;s interactions, opinions, emotions, the list goes on.  And then there is design,
+technology and execution.   All these factors, all these variables make software development the fantastic challenge
+that it is.  And I love it.  At the same time, I am on a mission to remove complexity introduced into a system when it
+need not be there.  The actual doing of this, making the decisions about what to include, what to leave out and to do
+this consistently on a day to day basis is difficult.</p>
+
+<p>As Product Owners and Engineers, we are faced with these decisions all the time as we work on a system.  Each decision,
+from those more-complex-than-it-needs-to-be features to irreversible design decisions to that single line of code, all
+have an impact on our productivity and agility.  Everybody talks about keeping it simple and taking a lean approach -
+this is nothing new.  It is how we can achieve this when making those decisions on the ground that is the focus of this
+blog.</p>
+
+<p></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/22/unnecessary-complexity/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/20/welcome-to-thinknear-engineering/">Welcome to Thinknear Engineering</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-20T17:53:07-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:53 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This blog marks the beginning of the Thinknear Engineering presence on the internet.
+<a href="http://thinknear.com/">Thinknear</a> started in 2011 and was acquired by <a href="http://www.telenav.com/">Telenav</a> in 2012.
+Though we&rsquo;re part of a much larger public company, Thinknear maintains its distinct engineering culture and spirit.
+We have been entirely cloud-based from the get-go (we&rsquo;re big users of AWS, Heroku, Librato, and more); we&rsquo;re very agile,
+using a scrum-based internal development cycle; and we have a lot of fun, like with daily Halo breaks.</p>
+
+<p>We also push the limits of what a small team can accomplish with today&rsquo;s technology.
+We handle tens of thousands of requests per second across our fleet with very aggressive latency targets,
+our hosts generate terabytes of data per day which we have to crunch with aggressive time goals,
+we&rsquo;re running massive PostGIS queries, and we dabble in Angular.js as well.</p>
+
+<p>On this blog, we will showcase our technology, expertise, open source contributions, and other things of interest to
+distributed systems&#8217; engineers. We are really excited about what we do, and we hope to share our enthusiasm here.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/2">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/06/heroku-cost-savings-using-generic-workers/">Heroku Cost Optimization Using Generic Workers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/presenting-at-reinvent/">Presenting at re:Invent</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/11/aws-templates-released/">Aws_templates Released</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -29,6 +29,8 @@ Tracking memory, CPU and network statistics are key to meeting these goals and m
 But we don't stop there. 
 There are multitudes of metrics to track. 
 
+<!-- more -->
+
 ## Measure everything
 
 At the instance level, AWS EC2 CloudWatch metrics from a Beanstalk environment didn't meet our needs. 

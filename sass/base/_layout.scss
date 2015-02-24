@@ -4,7 +4,7 @@ $max-width: 1200px !default;
 $pad-min: 18px !default;
 $pad-narrow: 25px !default;
 $pad-medium: 35px !default;
-$pad-wide: 55px !default;
+$pad-wide: 90px !default;
 
 // Sidebar widths used in media queries
 $sidebar-width-medium: 240px !default;
@@ -48,7 +48,7 @@ body {
   max-width: $max-width;
   position: relative;
   margin: 0 auto;
-  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section {
+  > header hgroup, > header nav, > footer, #content > article, #content > div > article, #content > div > section {
     @extend .group;
     padding-left: $pad-min;
     padding-right: $pad-min;
@@ -84,8 +84,6 @@ body {
   }
   > header {
     font-size: $header-font-size;
-    padding-top: $header-padding-top;
-    padding-bottom: $header-padding-bottom;
   }
 }
 
@@ -167,7 +165,7 @@ body.sidebar-footer {
 }
 
 @media only screen and (min-width: 992px) {
-  body > header { font-size: $header-font-size * 1.3; }
+  body > header { font-size: $header-font-size; }
   #content { margin-right: $sidebar-width-wide; }
   #content {
     > div, > article {

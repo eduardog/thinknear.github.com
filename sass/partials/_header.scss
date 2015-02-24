@@ -1,18 +1,25 @@
 body > header {
-  background: $header-bg;
+  background: url("/images/header_background_image.png") 0 0 $header-bg no-repeat;
+  hgroup {
+    padding: 48px 0 55px;
+    text-align: center;
+  }
   h1 {
-    display: inline-block;
+    color: $title-color;
     margin: 0;
+    text-shadow: lighten(#000, 20) 1px 1px;
     a, a:visited, a:hover {
       color: $title_color;
       text-decoration: none;
     }
+    img {
+      display: block;
+      margin: 0 auto 5px;
+    }
   }
   h2 {
-    margin: .2em 0 0;
-    @extend .sans;
-    font-size: 1em;
     color: $subtitle-color;
-    font-weight: normal;
+    margin: -2px 0 0;
+    text-shadow: lighten(#000, 20) 1px 1px;
   }
 }

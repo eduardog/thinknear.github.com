@@ -7,10 +7,10 @@ $pad-medium: 35px !default;
 $pad-wide: 90px !default;
 
 // Sidebar widths used in media queries
-$sidebar-width-medium: 240px !default;
+$sidebar-width-medium: 282px !default;
 $sidebar-pad-medium: 15px !default;
 $sidebar-pad-wide: 20px !default;
-$sidebar-width-wide: 300px !default;
+$sidebar-width-wide: 282px !default;
 
 $indented-lists: false !default;
 
@@ -21,13 +21,12 @@ $header-padding-bottom: 1.5em !default;
 .group { @include pie-clearfix; }
 
 @mixin collapse-sidebar {
+  background-color: $sidebar-bg, 2;
   float: none;
-  width: auto;
   clear: left;
   margin: 0;
   padding: 0 $pad-medium 1px;
-  background-color: lighten($sidebar-bg, 2);
-  border-top: 1px solid lighten($sidebar-border, 4);
+  width: auto;
   section {
     &.odd, &.even { float: left; width: 48%; }
     &.odd { margin-left: 0; }
@@ -54,15 +53,15 @@ body {
     padding-right: $pad-min;
     @media only screen and (min-width: 480px) {
       padding-left: $pad-narrow;
-      padding-right: $pad-narrow;
+      // padding-right: $pad-narrow;
     }
     @media only screen and (min-width: 768px) {
       padding-left: $pad-medium;
-      padding-right: $pad-medium;
+      // padding-right: $pad-medium;
     }
     @media only screen and (min-width: 992px) {
       padding-left: $pad-wide;
-      padding-right: $pad-wide;
+      // padding-right: $pad-wide;
     }
   }
   div.pagination {
@@ -95,8 +94,6 @@ body {
 aside.sidebar {
   float: none;
   padding: 0 $pad-min 1px;
-  background-color: lighten($sidebar-bg, 2);
-  border-top: 1px solid $sidebar-border;
   @extend .group;
 }
 
@@ -137,10 +134,15 @@ body.sidebar-footer {
   }
   #content {
     overflow: visible;
-    margin-right: $sidebar-width-medium;
+    margin-right: $sidebar-width-medium + $sidebar-pad-medium*3;
     position: relative;
-    .no-sidebar & { margin-right: 0; border-right: 0; }
-    .collapse-sidebar & { margin-right: 20px; }
+    .no-sidebar & {
+      border-right: 0;
+      margin-right: 0;
+    }
+    .collapse-sidebar & {
+      margin-right: 20px;
+    }
     > div, > article {
       padding-top: $pad-medium/2;
       padding-bottom: $pad-medium/2;
@@ -148,12 +150,12 @@ body.sidebar-footer {
     }
   }
   aside.sidebar {
-    width: $sidebar-width-medium - $sidebar-pad-medium*2;
-    padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
-    background: none;
+    padding: 0 $sidebar-pad-medium*2 $sidebar-pad-medium $sidebar-pad-medium;
+    background: $sidebar-bg;
     clear: none;
     float: left;
     margin: 0 -100% 0 0;
+    width: $sidebar-width-medium;
     section {
       width: auto; margin-left: 0;
       &.odd, &.even { float: none; width: auto; margin-left: 0; }
@@ -166,7 +168,9 @@ body.sidebar-footer {
 
 @media only screen and (min-width: 992px) {
   body > header { font-size: $header-font-size; }
-  #content { margin-right: $sidebar-width-wide; }
+  #content {
+    margin-right: $sidebar-width-wide + $sidebar-pad-wide*3;
+  }
   #content {
     > div, > article {
       padding-top: $pad-wide/2;
@@ -174,10 +178,13 @@ body.sidebar-footer {
     }
   }
   aside.sidebar {
-    width: $sidebar-width-wide - $sidebar-pad-wide*2;
-    padding: 1.2em $sidebar-pad-wide $sidebar-pad-wide;
+    padding: 1.2em $sidebar-pad-wide*2 $sidebar-pad-wide $sidebar-pad-wide;
+    width: $sidebar-width-wide;
     .collapse-sidebar & {
-      padding: { left: $pad-wide; right: $pad-wide; }
+      padding: {
+        left: $pad-wide;
+        right: $pad-wide;
+      }
     }
   }
 }

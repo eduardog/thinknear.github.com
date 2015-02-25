@@ -17,9 +17,16 @@ article {
       color: $text-color-light;
       margin: 0;
       &.meta {
+        color: $text-color-light2;
         @extend .sans;
+        font-size: 1em;
         text-transform: uppercase;
-        position: absolute; top: 0;
+        position: absolute;
+        top: 0;
+        span.new-highlight {
+          color: $red-link-color;
+          font-weight: bold;
+        }
       }
     }
     @media only screen and (min-width: 768px) {
@@ -67,7 +74,7 @@ article {
     }
   }
   > footer {
-    padding-bottom: 2.5em;
+    padding-bottom: 2em;
     margin-top: 2em;
     @extend .sans;
     p.meta {
@@ -82,37 +89,91 @@ article {
   }
 
 }
-article + article {
-  .blog-index & {
-    background: $img-border top left repeat-x;
-  }
-}
 #content .blog-index {
-  padding: { top: 0; bottom: 0; }
-  article { padding-top: 2em; }
-  article header { background: none; padding-bottom: 0; }
-  article h1 {
-    font-size: 2.2em;
-    a { color: inherit; &:hover { color: $link-color-hover; } }
+  article {
+    padding-top: 0;
+    header {
+      background: none;
+      margin-bottom: 0;
+      padding-top: 1.2em;
+      h1 {
+        color: $text-color-light;
+        font-size: 1.22em;
+        font-weight: 300;
+        a {
+          color: inherit;
+          &:hover {
+            color: $link-color-hover;
+          }
+        }
+      }
+    }
+    &.newest-entry {
+      margin-top: 1.5em;
+      header {
+        padding-top: 2em;
+      }
+      .new-entry {
+        p {
+          font-size: 1em;
+          line-height: 1.4em;
+          margin-bottom: 1.5em;
+          margin-top: -5px;
+        }
+      }
+      p.meta {
+        font-size: 1em;
+        margin-top: 0;
+      }
+      .entry-title {
+        font-size: 2em;
+      }
+      a[rel=full-article] {
+        background-color: $button-bg;
+        color: $text-color-light;
+        font-weight: 300;
+        line-height: 1.5em;
+        height: 25px;
+        padding: .4em .8em;
+        text-align: center;
+        text-transform: uppercase;
+        width: 151px;
+        &:hover {
+          background-color: $header-bg;
+          color: #FFF;
+          text-shadow: none;
+        }
+        &:after {
+          display: none !important;
+        }
+      }
+    }
+    p {
+      @extend .sans;
+      color: $text-color-light;
+      font-size: .77em;
+      font-weight: 300;
+      line-height: 1.55em;
+      margin-bottom: 0;
+    }
   }
   a[rel=full-article] {
-    background: darken($main-bg, 5);
-    display: inline-block;
-    padding: .4em .8em;
-    margin-right: .5em;
-    text-decoration: none;
-    color: mix($text-color, $text-color-light);
     @extend .serif;
-    @include transition(background-color .5s);
+    color: $red-link-color;
+    display: inline-block;
+    text-decoration: none;
     &:hover {
-      background: $link-color-hover;
+      color: $text-color-light;
       text-shadow: none;
-      color: $main-bg;
+    }
+    &:after {
+      content: '>\0000a0';
+      margin-left: 5px;
     }
   }
   footer {
     @extend .sans;
-    margin-top: 1em;
+    margin-top: 0;
   }
 }
 

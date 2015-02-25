@@ -7,7 +7,7 @@
 {% if post.date %}
   {% capture time %}
     {{ post.date_html }}
-    {% if post.is_newest %} NEW! {% endif %}
+    {% if post.is_newest %} <span class="new-highlight">NEW!</span> {% endif %}
   {% endcapture %}
 {% endif %}
 

@@ -5,7 +5,7 @@ layout: default
   {% assign index = true %}
   {% for post in paginator.posts %}
   {% assign content = post.content %}
-    <article>
+    <article class="{%if post.is_newest%}newest-entry{% endif %}">
       {% include article.html %}
     </article>
   {% endfor %}

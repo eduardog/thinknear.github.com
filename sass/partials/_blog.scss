@@ -74,7 +74,8 @@ article {
     }
   }
   > footer {
-    padding-bottom: 2em;
+    padding-bottom: 1em;
+    margin-bottom: 1.2em;
     margin-top: 2em;
     @extend .sans;
     p.meta {
@@ -147,6 +148,9 @@ article {
           display: none !important;
         }
       }
+      footer {
+        border-bottom: none;
+      }
     }
     p {
       @extend .sans;
@@ -173,6 +177,7 @@ article {
   }
   footer {
     @extend .sans;
+    border-bottom: $border-color-light 1px solid;
     margin-top: 0;
   }
 }
@@ -186,9 +191,12 @@ article {
 #content div.pagination {
   text-align: center;
   font-size: .95em;
+  padding: {
+    bottom: 1.5em;
+    top: 1.5em;
+  }
   position: relative;
-  background: $img-border top left repeat-x;
-  padding: {top: 1.5em; bottom: 1.5em;}
+  // background: $img-border top left repeat-x;
   a {
     text-decoration: none;
     color: $text-color-light;

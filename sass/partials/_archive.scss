@@ -11,10 +11,15 @@
     }
     footer { padding: 0; margin: 0;}
   }
-  h1 { color: $text-color; margin-bottom: .3em; }
-  h2 { display: none; }
   h1 {
-    font-size: 1.5em;
+    color: $text-color;
+    font-size: 1em;
+    margin-bottom: .3em; }
+  h2 {
+    display: none;
+  }
+  h1 {
+    font-size: 1em;
     a {
       @include hover-link;
       color: inherit;
@@ -49,10 +54,10 @@
       &:first-child { padding-top: .75em; }
     }
     time {
+      left: 0em;
       position: absolute;
       text-align: right;
-      left: 0em;
-      top: 1.8em;
+      top: 1.2em;
     }
     .year { display: none; }
     article {

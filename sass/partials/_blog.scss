@@ -8,18 +8,28 @@ article {
     margin-bottom: 1em;
     background: $img-border bottom left repeat-x;
     h1 {
+      color: $text-color-light;
+      font-weight: 300;
       margin: 0;
-      a { text-decoration: none;
-        &:hover { text-decoration: underline; } }
+      &.entry-title {
+        font-size: 2em;
+      }
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
     p {
+      @extend .sans;
       font-size: .9em;
       color: $text-color-light;
       margin: 0;
       &.meta {
         color: $text-color-light2;
-        @extend .sans;
         font-size: 1em;
+        font-weight: 300;
         text-transform: uppercase;
         position: absolute;
         top: 0;
@@ -48,6 +58,11 @@ article {
     background: $img-border bottom left repeat-x;
     font-size: 2.0em; font-style: italic;
     line-height: 1.3em;
+  }
+  p, ul, ol {
+    @extend .sans;
+    font-weight: 300;
+    font-size: 1em;
   }
   img, video, .flash-video {
     @extend .flex-content;
@@ -79,9 +94,9 @@ article {
     margin-top: 2em;
     @extend .sans;
     p.meta {
-      margin-bottom: .8em;
-      font-size: .85em;
       clear: both;
+      font-size: .85em;
+      margin-bottom: .8em;
       overflow: hidden;
     }
     .byline + time:before, time +time:before, .comments:before, .byline ~ .categories:before {
@@ -97,10 +112,8 @@ article {
       background: none;
       margin-bottom: 0;
       padding-top: 1.2em;
-      h1 {
-        color: $text-color-light;
-        font-size: 1.22em;
-        font-weight: 300;
+      h1.entry-title{
+        font-size: 1.2em;
         a {
           color: inherit;
           &:hover {
@@ -113,6 +126,9 @@ article {
       margin-top: 1.5em;
       header {
         padding-top: 2em;
+        h1 {
+          font-size: 2em;
+        }
       }
       .new-entry {
         p {
@@ -125,9 +141,6 @@ article {
       p.meta {
         font-size: 1em;
         margin-top: 0;
-      }
-      .entry-title {
-        font-size: 2em;
       }
       a[rel=full-article] {
         background-color: $button-bg;

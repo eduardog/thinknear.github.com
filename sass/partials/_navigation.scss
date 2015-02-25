@@ -10,7 +10,7 @@ header > nav {
     .search {
       background-color: darken($nav-bg, 15);
       border: none;
-      color: #888;
+      color: $nav-search;
       font-family: $sans;
       font-size: .85em;
       line-height: 1.1em;

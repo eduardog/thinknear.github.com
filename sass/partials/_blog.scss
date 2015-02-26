@@ -46,8 +46,9 @@ article {
     }
   }
   h2 {
+    @extend .sans;
+    font-weight: 300;
     padding-top: 0.8em;
-    background: $img-border top left repeat-x;
   }
   .entry-content & h2:first-child, header + h2 { padding-top: 0; }
   h2:first-child, header + h2 { background: none; }
@@ -146,7 +147,7 @@ article {
         background-color: $button-bg;
         color: $text-color-light;
         font-weight: 300;
-        line-height: 1.5em;
+        line-height: 2em;
         height: 25px;
         padding: .4em .8em;
         text-align: center;
@@ -175,9 +176,10 @@ article {
     }
   }
   a[rel=full-article] {
-    @extend .serif;
+    @extend .sans;
     color: $red-link-color;
     display: inline-block;
+    font-size: .85em;
     text-decoration: none;
     &:hover {
       color: $text-color-light;

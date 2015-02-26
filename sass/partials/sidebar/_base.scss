@@ -13,9 +13,10 @@ aside.sidebar {
     line-height: 1.4em;
     margin-bottom: 1.5em;
     h1 {
+      font-weight: 300;
+      border-bottom: 1px solid $sidebar-border;
       margin: 1.5em 0 0;
       padding-bottom: .2em;
-      border-bottom: 1px solid $sidebar-border;
       @extend .side-shadow-border;
       + p {
         padding-top: .4em;

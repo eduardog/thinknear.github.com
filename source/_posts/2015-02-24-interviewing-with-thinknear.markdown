@@ -11,7 +11,7 @@ author: John Hinnegan
 We are hiring like crazy here at Thinknear. 
 We're solving massive scale challenges in the hundreds of thousands of requests per second, pressing databases to the limit, and we have more data than we know what to do with. 
 As a result, we're looking for engineers, data scientists, and managers. 
-All these people are going through our process, and I wanted tos hare a bit more about that.
+All these people are going through our process, and I wanted to share a bit more about that.
 
 I'm going to skip the part where candidates first hear about us. 
 We connect with people through recruiters, linked in, personal networks, events hosted at our offices, on campuses, .... so it's different for everyone.

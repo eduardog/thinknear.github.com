@@ -44,7 +44,7 @@ $header-padding-bottom: 1.5em !default;
 
 body {
   -webkit-text-size-adjust: none;
-  max-width: $max-width;
+  // max-width: $max-width;
   position: relative;
   margin: 0 auto;
   > header hgroup, > header nav, > footer, #content > article, #content > div > article, #content > div > section {
@@ -133,8 +133,8 @@ body.sidebar-footer {
     margin: 0 auto;
   }
   #content {
-    overflow: visible;
     margin-right: $sidebar-width-medium + $sidebar-pad-medium*3;
+    overflow: visible;
     position: relative;
     .no-sidebar & {
       border-right: 0;

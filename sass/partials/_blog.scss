@@ -204,17 +204,17 @@ article {
 }
 
 #content div.pagination {
-  text-align: center;
+  font-family: $sans;
   font-size: .95em;
   padding: {
     bottom: 1.5em;
     top: 1.5em;
   }
   position: relative;
-  // background: $img-border top left repeat-x;
+  text-align: center;
   a {
-    text-decoration: none;
     color: $text-color-light;
+    text-decoration: none;
     &.prev { position: absolute; left: 0; }
     &.next { position: absolute; right: 0; }
     &:hover { color: $link-color-hover; }

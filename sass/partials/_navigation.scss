@@ -4,6 +4,21 @@ header > nav {
   position: relative;
   padding-top: .55em;
   @include box-shadow(#000 0 0 4px);
+  .container {
+    margin: 0 auto;
+    max-width: $max-width;
+    padding-right: $pad-wide;
+  }
+  @media only screen and (min-width: 480px) {
+    .container {
+      padding-right: $pad-narrow;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .container {
+      padding-right: $pad-medium;
+    }
+  }
   form {
     @include background-clip(padding-box);
     margin: 0; padding: 0;
@@ -75,8 +90,7 @@ header > nav {
     form {
       float: right;
       text-align: left;
-      padding-left: .8em;
-      width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
+      width: 155px;
       .search {
         background: darken($nav-bg, 15) image-url('search-blue.png') 95% .65em no-repeat;
         font-size: .85em;
@@ -107,7 +121,7 @@ header > nav {
   }
   @media only screen and (min-width: 992px) {
     form {
-      width: $sidebar-width-wide - $pad-wide - $sidebar-pad-wide*2 + 10px;
+      width: $sidebar-width-medium - $pad-medium*2 + 20px;
     }
     ul[data-subscription$=email] + form {
       width: $sidebar-width-wide - $pad-wide - $sidebar-pad-wide*2 - 58px;

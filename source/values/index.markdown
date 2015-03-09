@@ -7,11 +7,11 @@ sharing: true
 footer: true
 ---
 
-## Who we are 
+## Who we are
 
-Thinknear is a company founded on the principle that technology is the driver of innovation, engineering is at the core of what Thinknear does and values. We believe that we win by leveraging a small team of exceptional software engineers and helping them to achieve their maximum potential, both individually and as a team. Our business success is driven by technological innovation, product differentiation, and repeat customers -- all of which are directly influenced by the engineering team. We create a fun and productive environment where we encourage learning and risk taking. 
+Thinknear is a company founded on the principle that technology is the driver of innovation, engineering is at the core of what Thinknear does and values. We believe that we win by leveraging a small team of exceptional software engineers and helping them to achieve their maximum potential, both individually and as a team. Our business success is driven by technological innovation, product differentiation, and repeat customers -- all of which are directly influenced by the engineering team. We create a fun and productive environment where we encourage learning and risk taking.
 
-Fun? There’s a pretty big Halo game going on most days around 4:30; there’s also basketball in the parking lot and it just wouldn’t feel like a startup if we didn’t also have a ping pong table. 
+Fun? There’s a pretty big Halo game going on most days around 4:30; there’s also basketball in the parking lot and it just wouldn’t feel like a startup if we didn’t also have a ping pong table.
 
 Productive? Engineers don’t have meetings in the afternoons. That’s right, no one is allowed to book meetings with engineers after lunch. We also make sure the product team isn’t constantly walking down to interrupt engineers in the zone.
 

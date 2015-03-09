@@ -1,50 +1,75 @@
-body > nav {
-  position: relative;
+header > nav {
+  @include pie-clearfix;
   background-color: $nav-bg;
-  @include background($nav-bg-front, $nav-bg-back);
-  border: {
-    top: 1px solid $nav-border-top;
-    bottom: 1px solid $nav-border-bottom; }
-  padding-top: .35em;
-  padding-bottom: .35em;
+  position: relative;
+  padding-top: .55em;
+  @include box-shadow(#000 0 0 4px);
+  .container {
+    margin: 0 auto;
+    max-width: $max-width;
+    padding-right: $pad-wide;
+  }
+  @media only screen and (min-width: 480px) {
+    .container {
+      padding-right: $pad-narrow;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .container {
+      padding-right: $pad-medium;
+    }
+  }
   form {
     @include background-clip(padding-box);
     margin: 0; padding: 0;
     .search {
-      padding: .3em .5em 0;
-      font-size: .85em;
+      background-color: darken($nav-bg, 15);
+      border: none;
+      color: $nav-search;
       font-family: $sans;
+      font-size: .85em;
       line-height: 1.1em;
+      padding: .65em .5em .5em;
       width: 95%;
-      @include border-radius(.5em);
+      @include border-radius(.25em);
       @include background-clip(padding-box);
-      @include box-shadow(lighten($nav-bg, 2) 0 1px);
-      background-color: lighten($nav-bg, 15);
-      border: 1px solid $nav-border;
-      color: #888;
+      @include box-shadow(lighten(#000,75) 0 0 3px inset);
       &:focus {
-        color: #444;
-        border-color: #80b1df;
-        @include box-shadow(#80b1df 0 0 4px, #80b1df 0 0 3px inset);
-        background-color: #fff;
+        background-color: darken($nav-bg, 15);
         outline: none;
       }
     }
   }
-  fieldset[role=search]{ float: right; width: 48%; }
-  fieldset.mobile-nav{ float: left; width: 48%;
-    select{ width: 100%; font-size: .8em; border: 1px solid #888;}
+  @media only screen and (max-width: 649px) {
+    > a > img {
+      margin: .5em auto;
+      display: block;
+    }
+  }
+  fieldset[role=search]{
+    margin: 0 auto;
+    width: 50%;
+  }
+  fieldset.mobile-nav {
+    margin: 1em auto 1.5em;
+    width: 50%;
+    select {
+      border: 1px solid #888;
+      font-size: .8em;
+      width: 100%;
+    }
   }
   ul { display: none; }
-  @media only screen and (min-width: 550px) {
+  @media only screen and (min-width: 650px) {
     font-size: .9em;
     ul {
       @include horizontal-list(0);
       float: left;
       display: block;
-      padding-top: .15em;
+      padding-top: .5em;
     }
     ul.subscription {
+      display: none;
       margin-left: .8em;
       float: right;
       li:last-child a { padding-right: 0; }
@@ -55,30 +80,36 @@ body > nav {
     a {
       @include link-colors($nav-color, $nav-color-hover, $visited: $nav-color);
       font-family: $sans;
-      text-shadow: lighten($nav-bg, 12) 0 1px;
       float: left;
       text-decoration: none;
-      font-size: 1.1em;
-      padding: .1em 0;
+      font-size: .85em;
+      font-weight: bold;
       line-height: 1.5em;
-    }
-    li + li {
-      border-left: 1px solid $nav-border-left;
-      margin-left: .8em;
-      a {
-        padding-left: .8em;
-        border-left: 1px solid $nav-border-right;
-      }
+      margin: 0 1.7em 0 0;
     }
     form {
       float: right;
       text-align: left;
-      padding-left: .8em;
-      width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
+      width: 155px;
       .search {
-        width: 93%;
-        font-size: .95em;
+        background: darken($nav-bg, 15) image-url('search-blue.png') 95% .65em no-repeat;
+        font-size: .85em;
+        font-weight: 300;
         line-height: 1.2em;
+        &::-webkit-input-placeholder {
+          color: $nav-search;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+           color: $nav-search;
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+           color: $nav-search;
+        }
+
+        &:-ms-input-placeholder {
+           color: $nav-search;
+        }
       }
     }
     ul[data-subscription$=email] + form {
@@ -90,7 +121,7 @@ body > nav {
   }
   @media only screen and (min-width: 992px) {
     form {
-      width: $sidebar-width-wide - $pad-wide - $sidebar-pad-wide*2 + 10px;
+      width: $sidebar-width-medium - $pad-medium*2 + 20px;
     }
     ul[data-subscription$=email] + form {
       width: $sidebar-width-wide - $pad-wide - $sidebar-pad-wide*2 - 58px;
@@ -99,14 +130,13 @@ body > nav {
 }
 .no-placeholder {
   body > nav .search {
-    background: lighten($nav-bg, 15) image-url('search.png') .3em .25em no-repeat;
+    background: lighten($header-bg, 15) image-url('search.png') .3em .25em no-repeat;
     text-indent: 1.3em;
   }
 }
 @mixin mask-subscription-nav($feed: 'rss.png'){
   position: relative; top: 0px;
   text-indent: -999999em;
-  background-color: $nav-border-right;
   border: 0;
   padding: 0;
   &,&:after { @include mask-image($feed); }

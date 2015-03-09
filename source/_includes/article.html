@@ -5,6 +5,7 @@
     {% else %}
       <h1 class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
     {% endif %}
+
     {% unless page.meta == false %}
       <p class="meta">
         {% include post/date.html %}{{ time }}
@@ -16,8 +17,11 @@
     {% endunless %}
   </header>
 {% endunless %}
+
 {% if index %}
-  <div class="entry-content">{{ content | excerpt }}</div>
+  <div class="entry-content {%if post.is_newest%}new-entry{% endif %}">
+    {{ content | excerpt | truncatewords: 71 }}
+  </div>
   {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
   {% if excerpted == 'true' %}
     <footer>
@@ -25,5 +29,5 @@
     </footer>
   {% endif %}
 {% else %}
-<div class="entry-content">{{ content }}</div>
+  <div class="entry-content">{{ content }}</div>
 {% endif %}

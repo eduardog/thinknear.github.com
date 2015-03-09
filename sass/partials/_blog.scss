@@ -8,18 +8,35 @@ article {
     margin-bottom: 1em;
     background: $img-border bottom left repeat-x;
     h1 {
+      color: $text-color-light;
+      font-weight: 300;
       margin: 0;
-      a { text-decoration: none;
-        &:hover { text-decoration: underline; } }
+      &.entry-title {
+        font-size: 2em;
+      }
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
     p {
+      @extend .sans;
       font-size: .9em;
       color: $text-color-light;
       margin: 0;
       &.meta {
-        @extend .sans;
+        color: $text-color-light2;
+        font-size: 1em;
+        font-weight: 300;
         text-transform: uppercase;
-        position: absolute; top: 0;
+        position: absolute;
+        top: 0;
+        span.new-highlight {
+          color: $red-link-color;
+          font-weight: bold;
+        }
       }
     }
     @media only screen and (min-width: 768px) {
@@ -29,8 +46,9 @@ article {
     }
   }
   h2 {
+    @extend .sans;
+    font-weight: 300;
     padding-top: 0.8em;
-    background: $img-border top left repeat-x;
   }
   .entry-content & h2:first-child, header + h2 { padding-top: 0; }
   h2:first-child, header + h2 { background: none; }
@@ -41,6 +59,11 @@ article {
     background: $img-border bottom left repeat-x;
     font-size: 2.0em; font-style: italic;
     line-height: 1.3em;
+  }
+  p, ul, ol {
+    @extend .sans;
+    font-weight: 300;
+    font-size: 1em;
   }
   img, video, .flash-video {
     @extend .flex-content;
@@ -67,13 +90,14 @@ article {
     }
   }
   > footer {
-    padding-bottom: 2.5em;
+    padding-bottom: 1em;
+    margin-bottom: 1.2em;
     margin-top: 2em;
     @extend .sans;
     p.meta {
-      margin-bottom: .8em;
-      font-size: .85em;
       clear: both;
+      font-size: .85em;
+      margin-bottom: .8em;
       overflow: hidden;
     }
     .byline + time:before, time +time:before, .comments:before, .byline ~ .categories:before {
@@ -82,37 +106,94 @@ article {
   }
 
 }
-article + article {
-  .blog-index & {
-    background: $img-border top left repeat-x;
-  }
-}
 #content .blog-index {
-  padding: { top: 0; bottom: 0; }
-  article { padding-top: 2em; }
-  article header { background: none; padding-bottom: 0; }
-  article h1 {
-    font-size: 2.2em;
-    a { color: inherit; &:hover { color: $link-color-hover; } }
+  article {
+    padding-top: 0;
+    header {
+      background: none;
+      margin-bottom: 0;
+      padding-top: 1.2em;
+      h1.entry-title{
+        font-size: 1.2em;
+        a {
+          color: inherit;
+          &:hover {
+            color: $link-color-hover;
+          }
+        }
+      }
+    }
+    &.newest-entry {
+      margin-top: 1.5em;
+      header {
+        padding-top: 2em;
+        h1 {
+          font-size: 2em;
+        }
+      }
+      .new-entry {
+        p {
+          font-size: 1em;
+          line-height: 1.4em;
+          margin-bottom: 1.5em;
+          margin-top: -5px;
+        }
+      }
+      p.meta {
+        font-size: 1em;
+        margin-top: 0;
+      }
+      a[rel=full-article] {
+        background-color: $button-bg;
+        color: $text-color-light;
+        font-weight: 300;
+        line-height: 2em;
+        height: 25px;
+        padding: .4em .8em;
+        text-align: center;
+        text-transform: uppercase;
+        width: 151px;
+        &:hover {
+          background-color: $header-bg;
+          color: #FFF;
+          text-shadow: none;
+        }
+        &:after {
+          display: none !important;
+        }
+      }
+      footer {
+        border-bottom: none;
+      }
+    }
+    p {
+      @extend .sans;
+      color: $text-color-light;
+      font-size: .77em;
+      font-weight: 300;
+      line-height: 1.55em;
+      margin-bottom: 0;
+    }
   }
   a[rel=full-article] {
-    background: darken($main-bg, 5);
+    @extend .sans;
+    color: $red-link-color;
     display: inline-block;
-    padding: .4em .8em;
-    margin-right: .5em;
+    font-size: .85em;
     text-decoration: none;
-    color: mix($text-color, $text-color-light);
-    @extend .serif;
-    @include transition(background-color .5s);
     &:hover {
-      background: $link-color-hover;
+      color: $text-color-light;
       text-shadow: none;
-      color: $main-bg;
+    }
+    &:after {
+      content: '>\0000a0';
+      margin-left: 5px;
     }
   }
   footer {
     @extend .sans;
-    margin-top: 1em;
+    border-bottom: $border-color-light 1px solid;
+    margin-top: 0;
   }
 }
 
@@ -123,14 +204,17 @@ article + article {
 }
 
 #content div.pagination {
-  text-align: center;
+  font-family: $sans;
   font-size: .95em;
+  padding: {
+    bottom: 1.5em;
+    top: 1.5em;
+  }
   position: relative;
-  background: $img-border top left repeat-x;
-  padding: {top: 1.5em; bottom: 1.5em;}
+  text-align: center;
   a {
-    text-decoration: none;
     color: $text-color-light;
+    text-decoration: none;
     &.prev { position: absolute; left: 0; }
     &.next { position: absolute; right: 0; }
     &:hover { color: $link-color-hover; }

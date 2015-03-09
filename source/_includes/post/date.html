@@ -1,5 +1,25 @@
-{% if page.date %}{% capture time %}{{ page.date_time_html }}{% endcapture %}{% endif %}
-{% if post.date %}{% capture time %}{{ post.date_time_html }}{% endcapture %}{% endif %}
+{% if page.date %}
+  {% capture time %}
+    {{ page.date_html }}
+  {% endcapture %}
+{% endif %}
 
-{% if page.updated %}{% capture updated %}{{ page.date_time_updated_html }}{% endcapture %}{% endif %}
-{% if post.updated %}{% capture updated %}{{ post.date_time_updated_html }}{% endcapture %}{% endif %}
+{% if post.date %}
+  {% capture time %}
+    {{ post.date_html }}
+    {% if post.is_newest %} <span class="new-highlight">NEW!</span> {% endif %}
+  {% endcapture %}
+{% endif %}
+
+{% if page.updated %}
+  {% capture updated %}
+    {{ page.date_time_updated_html }}
+  {% endcapture %}
+{% endif %}
+
+{% if post.updated %}
+  {% capture updated %}
+    {{ post.date_time_updated_html }}
+  {% endcapture %}
+
+{% endif %}

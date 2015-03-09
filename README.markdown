@@ -17,14 +17,14 @@ rake install
 Note: For rake install if it asks if a theme is present and to overwrite, say no as rake has already been installed.
 * add post (new posts created in: `source/_posts`. [More on directory layout](http://stackoverflow.com/questions/12328828/directory-structure-of-octopress))
 ```shell
-rake new_post["Creating a Github Blog Using Octopress"] 
+rake new_post["Creating a Github Blog Using Octopress"]
 ```
 * generate, preview, iterate, commit
 ```shell
 rake generate
 rake preview
 git add .
-git commit -m "Blog post." 
+git commit -m "Blog post."
 git push origin source
 ```
 * deploy
@@ -40,3 +40,7 @@ Then each time you want to deploy:
 ```shell
 rake deploy
 ```
+
+
+```How Tos
+Make a post appear as a _new entry_ by setting is_newest in the yaml to true. Remove from last article.

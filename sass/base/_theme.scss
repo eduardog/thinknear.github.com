@@ -8,34 +8,31 @@ $link-color-visited: adjust-color($link-color, $hue: 80, $lightness: -4) !defaul
 $link-color-active: adjust-color($link-color-hover, $lightness: -15) !default;
 
 // Main Section Colors
-$main-bg: #f8f8f8 !default;
+$main-bg: #fff !default;
 $page-bg: #252525 !default;
 $article-border: #eeeeee !default;
 
-$header-bg: #333 !default;
+$header-bg: #00afd7 !default;
 $header-border: lighten($header-bg, 15) !default;
-$title-color: #f2f2f2 !default;
-$subtitle-color: #aaa !default;
+$button-bg: #FFC72c !default;
+$title-color: #fff !default;
+$subtitle-color: #fff !default;
+$red-link-color: #E0004D !default;
+$border-color-light: #E2E2E2 !default;
 
 $text-color: #222 !default;
-$text-color-light: #aaa !default;
+$text-color-light: #2E2E2E !default;
+$text-color-light2: #63666a !default;
 $type-border: #ddd !default;
 
 /* Navigation */
-$nav-bg: #ccc !default;
-$nav-bg-front: image-url('noise.png') !default;
-$nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11)) !default;
-$nav-color: darken($nav-bg, 38) !default;
+$nav-bg: #00afd7 !default;
+$nav-color: #fff !default;
 $nav-color-hover: darken($nav-color, 25) !default;
-$nav-placeholder: desaturate(darken($nav-bg, 10), 15) !default;
-$nav-border: darken($nav-bg, 10) !default;
-$nav-border-top: lighten($nav-bg, 15) !default;
-$nav-border-bottom: darken($nav-bg, 25) !default;
-$nav-border-left: darken($nav-bg, 11) !default;
-$nav-border-right: lighten($nav-bg, 7) !default;
+$nav-search: #56d3ef !default;
 
 /* Sidebar colors */
-$sidebar-bg: #f2f2f2 !default;
+$sidebar-bg: #fff !default;
 $sidebar-link-color: $text-color !default;
 $sidebar-link-color-hover: $link-color-hover !default;
 $sidebar-link-color-active: $link-color-active !default;
@@ -71,15 +68,13 @@ a {
 }
 
 html {
-  background: $page-bg image-url('line-tile.png') top left;
+  background-color: $main-bg;
 }
 body {
   > div {
     background: $sidebar-bg $noise-bg;
-    border-bottom: 1px solid $page-border-bottom;
     > div {
-      background: $main-bg $noise-bg;
-      border-right: 1px solid $sidebar-border;
+      background: $main-bg;
     }
   }
 }

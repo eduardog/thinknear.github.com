@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Interviewing with Thinknear"
-date: 2015-02-24 17:35:22 -0800
+date: 2015-03-09 11:35:22 -0800
 comments: true
 categories: 
+is_newest: true
 author: John Hinnegan
 ---
 

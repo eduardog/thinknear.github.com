@@ -21,11 +21,12 @@ This is an online coding test, the goal of which is to provide a coding sample t
 This step exists because we get a lot of people applying for positions who can't code.
 It's a bit frustrating, but this step helps save time for both parties -- since the position here requires writing lots of code, we really want to make sure up front that we cover it.
 
-Very sr. candidates might opt for what we call a 'sales call'.
+With Sr. candidates we will often opt for what we call a 'sales call'.
 This is a call between the candidate and a people manager where we discuss what the candidate is looking for and attempt to determine if Thinknear will be the right fit. 
+Like coding challenges, this is intended to save both the time of our engineers as well as that of the candidate - lets not spend time going through the interview if we don't think there's a good fit. 
 
 The next step is a technical phone screen. 
-This is a call with an engineer here at Thinknear with whome you will solve a problem using code. 
+This is a call with an engineer here at Thinknear with whom you will solve a problem using code. 
 To do this, we ask candidates to share a Google doc with the interviewer, and then solve a problem (without the aid of an IDE).
 
 We like 'simple' problems which are solvable by applying data structures and algorithms.
@@ -38,15 +39,15 @@ We vary between 1 and 2 phone screens.
 After that, we ask candidates to come meet us in person. 
 We will pay for travel for non-local candidates (and if later make an offer, we also cover relocation).
 
-For the in house, we ask that candidates wear comfortable clothes akin to what they'd wear to work on a regular basis.
+For the in house, we ask that candidates wear comfortable clothes akin to what they'd wear to work (except for Halloween -- seriously, it'll be weird if you wear a costume).
 You won't wear a suit here on a regular basis, there's no point wearing one to your interview.
-Just make sure you're clean and presentable; don't overdo the cologne or perfume if that's your thing. 
 
 The in house interviews vary a lot depending on the position and level. 
 Junior engineering candidates will tend to meet with more engineers and their interviews will focus very strongly on coding.
-Midlevel engineers will have product folks added to the loop and spend some time on design.
+Mid-level engineers will have product folks added to the loop and spend some time on design.
 Senior engineers will do more design and talk more about leadership, team building, and architecture.
 Management types will get management type questions (e.g. working with underperformers).
+We'll usually do lunch or a break of some sort, which will give you a chance to socialize with the potential team.
 
 Please bring your questions to the in house! 
 We love it when candidates have good questions for us, and we like people who are more discerning in their selection.

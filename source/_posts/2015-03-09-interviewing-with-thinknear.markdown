@@ -10,6 +10,7 @@ author: John Hinnegan
 
 
 We are hiring like crazy here at Thinknear. 
+\(Current openings on our [careers page](http://www.thinknear.com/career/).\)
 We're solving massive scale challenges in the hundreds of thousands of requests per second, pressing databases to the limit, and we have more data than we know what to do with. 
 As a result, we're looking for engineers, data scientists, and managers. 
 All these people are going through our process, and I wanted to share a bit more about that.
@@ -57,5 +58,4 @@ By the end of the day, you should have a very good idea of what it might be like
 
 We're very picky with who we hire, but that means that if you make it all the way through, you get to work with really great engineers. 
 For many people, that's incentive enough. 
-
 

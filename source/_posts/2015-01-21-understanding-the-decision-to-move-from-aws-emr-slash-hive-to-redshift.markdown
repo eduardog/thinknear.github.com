@@ -3,7 +3,6 @@ layout: post
 title: "Understanding The Decision To Move From AWS EMR/Hive To Redshift"
 date: 2015-01-21 17:40:47 -0800
 comments: true
-is_newest: true
 categories:
 ---
 

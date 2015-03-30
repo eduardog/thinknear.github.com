@@ -3,6 +3,14 @@
   
   
   <url>
+    <loc>http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/</loc>
+    
+    <lastmod>2015-03-30T10:47:39-07:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://engineering.thinknear.com/blog/2015/03/09/interviewing-with-thinknear/</loc>
     
     <lastmod>2015-03-09T12:35:22-07:00</lastmod>
@@ -85,21 +93,21 @@
   
   <url>
     <loc>http://engineering.thinknear.com/blog/archives/</loc>
-    <lastmod>2015-03-09T11:48:38-07:00</lastmod>
+    <lastmod>2015-03-30T10:45:13-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://engineering.thinknear.com/</loc>
-    <lastmod>2015-03-09T11:48:38-07:00</lastmod>
+    <lastmod>2015-03-30T10:45:13-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://engineering.thinknear.com/values/</loc>
-    <lastmod>2015-03-09T11:48:38-07:00</lastmod>
+    <lastmod>2015-03-30T10:45:13-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

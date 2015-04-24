@@ -4,7 +4,7 @@
   <title><![CDATA[Thinknear Engineering]]></title>
   <link href="http://engineering.thinknear.com/atom.xml" rel="self"/>
   <link href="http://engineering.thinknear.com/"/>
-  <updated>2015-03-30T10:45:13-07:00</updated>
+  <updated>2015-04-24T09:46:51-07:00</updated>
   <id>http://engineering.thinknear.com/</id>
   <author>
     <name><![CDATA[Thinknear by Telenav]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Testing @ Thinknear - Part One: Technology Choices]]></title>
+    <link href="http://engineering.thinknear.com/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/"/>
+    <updated>2015-04-23T12:50:04-07:00</updated>
+    <id>http://engineering.thinknear.com/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices</id>
+    <content type="html"><![CDATA[<p>At Thinknear we believe automated tests are essential. Having strong automated test coverage allows the team to:</p>
+
+<ul>
+<li>deploy production code faster, while maintaining quality</li>
+<li>make bolder changes to the system with confidence</li>
+<li>increase confidence that a certain change won&rsquo;t break important features of the systems</li>
+<li>decrease TCO for the entire product lifecycle</li>
+<li>analyze how the product would scale up/out, through PRS (Performance, Reliability, Stress) tests</li>
+</ul>
+
+
+<p>Thinknear&rsquo;s systems are based around two main development languages, Ruby and Java. Java is used for the real-time, high frequency bidding engine, while Ruby (on Rails)
+is used elsewhere.</p>
+
+<p>We test at the unit level, service level and integration level (end-to-end) using a veriety of tools:</p>
+
+<ul>
+<li>for the Ruby on Rails systems: RSpec, Capybara, Poltergeist, Karma</li>
+<li>for the Java-based systems: JUnit, Hamcrest, Sonar</li>
+<li>for the build management system: Jenkins</li>
+</ul>
+
+
+<p>Those tools were chosen in correlation with those development languages, the only exception being that we chose to write the service level tests
+for our Java-based systems in RSpec.</p>
+
+<ol>
+<li><p>Why <strong>RSpec</strong>? The layout of the tests focuses on how the software should behave (BDD) and follows natural language in a very close manner, the vocabulary and
+structure of the tests being more intuitive than we found in other testing frameworks. An example is the matchers, supporting both positive and negative expectations.</p></li>
+<li><p>Why <strong>Capybara</strong>? Capybara is used for UI browser testing, it allows easy switching of drivers, provides an efficient DSL for interacting with the DOM. We also
+evaluated Selenium, but chose Capybara because we found it to allow faster test development.
+Writing 99% reliable code still comes with experience, ways to get to that percentage will be discussed in another post.</p></li>
+<li><p>Why <strong>Poltergeist</strong>? Driver for PhantomJS (headless browser built on WebKit), the main reason for using it for our Capybara tests is speed. In our experiments,
+it proved 4-10 times faster than Selenium&rsquo;s full browser driver. Poltergeist has very clear error messages and it can re-raise Javascript errors from the page.</p></li>
+<li><p>Why <strong>Karma</strong>? Our UI relies heavily on AngularJS, therefore Karma, built by the AngularJS team, is the default solution for testing Javascript at the unit test level.
+It supports many plugins, and lets you test in a cross-browser environment.</p></li>
+<li><p>Why <strong>JUnit</strong>? The standard for testing in Java, JUnit is very well documented, supported by almost any IDE, is used for unit level testing,
+developers writing test cases while developing the software. TestNG is also a popular framework, we went with JUnit since this is what the team was most experienced with.</p></li>
+<li><p>Why <strong>Hamcrest</strong>? A library of matcher objects, makes the code more readable by allowing match rules to be defined declaratively (closer to natural language).
+We use it in combination with JUnit for our Java-based software.</p></li>
+<li><p>Why <strong>Sonar</strong>? Sonar provides a plugin architecture for different analysis tools like FindBugs, Squid etc. It can aggregate information from those analyzers,
+including those for understanding unit test code coverage. It has dashboards and historical views across all projects, and works well with the Jenkins build pipeline.
+Sonar can also analyze other languages, although that feature can be immature depending on the language. Besides code coverage, we use it to detect package cycles
+(circular dependencies) and to analyze code complexity.</p></li>
+<li><p>Why <strong>Jenkins</strong>? Popular continuous build tool, free and open source, Jenkins supports a wide array of plugins and features like support for SCM changes, console logs,
+email notifications, build exclusions and many others. Its flexibility allows it to fit in a variety of environments and makes it easy to develop complicated workflows.</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Migration and Dependencies on User Defined Tables/Views]]></title>

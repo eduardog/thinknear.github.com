@@ -4,7 +4,6 @@ title: "Rails Migration and Dependencies on User Defined Tables/Views"
 date: 2015-03-30 10:47:39 -0700
 comments: true
 categories: 
-is_newest: true
 author: Tassos Livogiannis
 ---
 

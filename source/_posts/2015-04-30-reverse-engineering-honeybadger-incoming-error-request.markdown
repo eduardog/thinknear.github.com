@@ -4,7 +4,6 @@ title: "Reverse Engineering Honeybadger Incoming Error Request"
 date: 2015-05-01 15:25:00 -0700
 author: Tassos Livogiannis
 comments: true
-is_newest: true
 categories:
 ---
 

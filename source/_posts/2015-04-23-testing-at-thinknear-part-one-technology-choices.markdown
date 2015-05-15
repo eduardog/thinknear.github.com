@@ -4,7 +4,6 @@ title: "Testing @ Thinknear - Part One: Technology Choices"
 date: 2015-04-23 12:50:04 -0700
 author: Ciprian Costin
 comments: true
-is_newest: true
 categories: 
 ---
 

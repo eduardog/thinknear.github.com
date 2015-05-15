@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unnecessary Complexity - Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content=""Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius — and a lot of courage — to move in the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/blog/2014/08/22/unnecessary-complexity">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+
+  <body   >
+
+    <header role="banner">
+      <nav role="navigation">
+        <div class="container">
+  <a href="/"><img src="/images/thinknear_engineering_logo.png" alt="Thinknear Engineering" /></a>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+  <ul class="main-navigation">
+  <li><a href="//www.thinknear.com">Thinknear</a></li>
+  <li><a href="/values">About Us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="//www.thinknear.com/career">Careers</a></li>
+</ul>
+
+</div>
+
+      </nav>
+
+      <hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1>
+    <a href="/">
+      <img src="/images/thinknear_engineering_logo_pin.png" alt="Thinknear Engineering" />
+    </a>
+    Thinknear Engineering
+  </h1>
+  
+    <h2>Big Data, High Frequency</h2>
+  
+</hgroup>
+
+
+    </header>
+
+    <div id="main">
+      <div id="content">
+        <div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Unnecessary Complexity</h1>
+    
+
+    
+      <p class="meta">
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2014-08-22T17:20:18-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span></time>
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><div align="center">
+"Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius — and a lot of courage — to move in the opposite direction." - Einstein
+</div>
+
+
+<p><p/>
+Software development is hard.  That&rsquo;s a fact.  Not only do we have a product that we must enhance, develop from scratch,
+or even maintain, but we have people&rsquo;s interactions, opinions, emotions, the list goes on.  And then there is design,
+technology and execution.   All these factors, all these variables make software development the fantastic challenge
+that it is.  And I love it.  At the same time, I am on a mission to remove complexity introduced into a system when it
+need not be there.  The actual doing of this, making the decisions about what to include, what to leave out and to do
+this consistently on a day to day basis is difficult.</p>
+
+<p>As Product Owners and Engineers, we are faced with these decisions all the time as we work on a system.  Each decision,
+from those more-complex-than-it-needs-to-be features to irreversible design decisions to that single line of code, all
+have an impact on our productivity and agility.  Everybody talks about keeping it simple and taking a lean approach -
+this is nothing new.  It is how we can achieve this when making those decisions on the ground that is the focus of this
+blog.</p>
+
+<p><!-- more --></p>
+
+<p>There are at least five major areas where we love to introduce complexity: feature development, execution, design,
+technology selection and code.</p>
+
+<p>Here I want to go through a number of approaches that I have used that help prevent complexity being incurred because,
+let&rsquo;s face it, the solution should only be as complex as the problem at hand.</p>
+
+<h2>Unnecessary feature complexity</h2>
+
+<p>The basic tenet of unnecessary feature complexity, especially when dealing with new product development,
+is to answer the question &ldquo;What is the minimum we have to do to figure out if this is going to work?&rdquo; Again, nothing
+new.  This is part of the Lean movement.  I&rsquo;m sure you have your own, but allow me to to offer the following approach
+to exploring a new product or service:</p>
+
+<ul>
+<li>What is the minimum amount of work we need to do in order to have the initial conversation with the first client?
+
+<ul>
+<li>Rough idea on features available</li>
+<li>Rough idea on tech, format, deployment and performance.  Discussion based, no documentation required.</li>
+</ul>
+</li>
+<li>What is the minimum amount of work we need to do to sell to our first client?
+
+<ul>
+<li>Minimum Marketable Product (MMP) determined along with feasibility</li>
+<li>More information about data required to be supplied and what would be returned.</li>
+<li>NOT the API contract</li>
+<li>(Internal only) Rough idea of implementation time to version 0.1 for first client.</li>
+</ul>
+</li>
+<li>Once we have sold with delivery estimate to client:
+
+<ul>
+<li>Lock down API contract or feature set including success/failure scenarios - deliver early so client can start mocking
+out from their end and write the integration code</li>
+<li>Integration approach detailed</li>
+<li>Deployment architecture detailed</li>
+<li>Performance characteristics and design to support detailed</li>
+<li>Implement and deliver MMP</li>
+<li>Roadmap for any further features created based on initial usage (iterative and incremental)</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Pretty straight forward, huh?  Yet we all know when we have done too much design after a product or idea has been put
+on the backburner.  Ever thought &ldquo;We really didn&rsquo;t need to do that much work to make that decision to defer the product&rdquo;? Make the hard decisions now to save time later.</p>
+
+<p>Of course, there are times when the above steps do not make sense, or they need to be modified.  For example,
+when doing a legacy migration. There are likely many clients that rely on features already present in the legacy system. In these cases,
+we can take the opportunity to evolve the clients during the migration and do some spring cleaning of
+the legacy system, i.e. answer the questions &ldquo;What features do we really need?&rdquo; and &ldquo;What features have proven to not
+be of value given what we know now about our business?&rdquo;  Unfortunately, as is most often the case, there are &ldquo;hidden&rdquo;
+organic features that have no documentation that can trip us up.</p>
+
+<h2>Unnecessary execution complexity</h2>
+
+<p>There are many in this category, so let&rsquo;s just focus on a few:</p>
+
+<ul>
+<li>Break big problems down into smaller pieces:  Be exact with the acceptance criteria.  This one is self explanatory.</li>
+<li>Business Accepting a story only when it is deployed and verified in production: This is a technique that <a href="http://mikquinlan.com/2013/07/28/no-more-burndown-no-more-definition-of-done/" target="_blank">I&rsquo;ve spoken about before.</a>
+It encourages quality and promotes continuous deployment, a part of the Continuous Delivery strategy.</li>
+<li>Keep to 1 week iterations if suitable: As long as there is a long term strategy, <a href="http://mikquinlan.com/2013/03/07/re-platforming-a-system-and-the-value-of-1-week-iterations/" target="_blank">1 week iterations</a>
+give more opportunities to retrospect and force breaking down of stories into smaller component parts of business value while keeping the overall mission squarely in the centre of the picture.</li>
+<li>Automate delivery:  Once we have small stories and iterative, incremental development, deploying manually,
+especially if we are practicing BA'ing a story once it is in production, takes a lot of effort. Make the investment in
+Continuous Delivery supported by automation, taking into account the aspects <a href="http://mikquinlan.com/2014/01/27/continuous-delivery-the-missing-piece-of-the-puzzle/" target="_blank">I have blogged about before</a>.
+Micro Services are also a viable option (note: Micro Services is a bad name, IMO, a service should just be small enough to fit in our
+headspace&hellip;but that is a topic for another blog).</li>
+</ul>
+
+
+<h2>Unnecessary design complexity</h2>
+
+<p>Keep it simple. We all know the acronym. Here are some ideas to help focus development efforts:</p>
+
+<ul>
+<li>Limit the number of business strategies/initiatives an organisation takes on:  This could actually be a section all
+on its own.  I have frequently been in organisations where multiple business strategies are pursued concurrently.<br/>
+There is nothing wrong with pursuing multiple business strategies, but when it exhausts the capacity of the organisation,
+then we end up with a lot of half done ideas that never gain the momentum they&rsquo;re supposed to due to not enough attention
+being paid to them (market forces notwithstanding).  This then trickles down into design.  Design is hard.  We must
+make sure we design within our capacity so we build something that will work and work well enough to fulfill the most
+valuable strategic objectives that we carefully chose.</li>
+<li>Keep designs incredibly straight forward wherever possible: Again, not a new concept, yet when on the ground how many
+times have you looked at a design and thought &ldquo;that is waaaay too complex&rdquo;?  More than once, maybe?  Not every edge
+case needs to be covered.  Work with the business to understand the acceptable levels of failure a system can have.<br/>
+During design, when an edge case comes up, if it&rsquo;s technical weigh up the likelihood of occurrence vs the effort to fix.
+Don&rsquo;t just dive in and fix it because it&rsquo;s there.  If it&rsquo;s a business edge case, work with the business to see if it
+needs to be resolved or whether a failure is acceptable.  Again, make hard decisions here.  Overall, taking a little
+longer to decide that a feature will not be implemented will save effort over a quick decision to do it then having
+the entire team take on that complexity.</li>
+</ul>
+
+
+<h2>Unnecessary technology complexity</h2>
+
+<p>Keep the learning curve as low as possible so that engineers have less to learn technologically and can focus on the
+solutions implemented to create the product or service.  Whatever we can do to have them focus more on the problems
+being solved rather than the different libraries we used to, say, create and access files can only be a good thing:</p>
+
+<ul>
+<li>Organisationally it is important to limit the technologies being used so we can build upon the knowledge acquired by
+our fellow engineers.  If we have one NoSQL database, do we really need another?  For a technology selection where
+NoSQL is deemed to be a good fit, it is important to come up with a reason why we cannot use a NoSQL technology that
+is already in production within our organisation, along with all the libraries we have built around it.  Of course,
+if that technology is not a fit, we then must be able to articulate the distinct advantages of the technology we want
+to introduce.  Polyglot solutions are a good thing, applied judiciously.  Again, effort vs value.  In this case, effort
+to de-risk, implement and build libraries/tools around the new technology vs value to the business.</li>
+<li>Within a service it is important to limit the libraries used.  The number of libraries a single service can end up
+using can be huge.  That huge effective pom.xml if you use Maven, that long list of gems.  Limit the libraries used for
+a service so that engineers will not just reach for the library they know when facing a problem, adding to the burgeoning
+list of libraries required for the project.</li>
+</ul>
+
+
+<h2>Unnecessary code/implementation complexity</h2>
+
+<p>Have you ever looked at a codebase and seen multiple ways of achieving the same thing?  For example, file handling,
+filtering specific objects out of lists etc.?  Yeah, me too.  It&rsquo;s important that we do common operations consistently
+within a codebase (and across services&hellip;harder but still possible).  Agree within the team how this should be done
+(use the <a href="https://code.google.com/p/guava-libraries/" target="_blank">Guava libraries</a>? <a href="http://commons.apache.org/" target="_blank">Apache Commons</a>? etc.)
+and stick to it.  If you are an engineer and unsure, look at other parts of the codebase.  Common methods of handling
+code results in less to learn and a decreased ramp up period for engineers new to it.</p>
+
+<h2>A note on back end infrastructure systems vs front end product development</h2>
+
+<p>Front end product development needs rapid delivery.  So we can&rsquo;t always live in a world where everything is consistent.  In these scenarios, agree among the team members the libraries to use, approach etc. and forge ahead developing the new product.  In this case, technical debt will ensue, but this is good technical debt.  In fact, we could say it is &ldquo;necessary&rdquo; technical debt. Necessary because not adding a feature can be as key to being first to market as adding a feature.</p>
+
+<p>If the product or feature is successful and is moved from proof to long lived, address the technical debt that has been incurred.  This typically happens when a product gets traction and a company is coming out of the startup phase. A great blog that articulates technical debt is
+<a href="http://blog.crisp.se/2013/10/11/henrikkniberg/good-and-bad-technical-debt" target="_blank">this one</a> by Henrik Kniberg.</p>
+
+<h2>Summary</h2>
+
+<p>I hope the above guidance helps.  Each of the bullet points could be a topic in itself, and I wanted this blog to be a collection of areas to consider.  If I was to sum this up in one sentence, it would be</p>
+
+<p>&ldquo;Take just a little more time to make the hard decisions.&rdquo;</p>
+
+<p>I am always looking for ways to make the development of software and, by extension, products easier, so I&rsquo;d be interested to know what strategies you use to limit complexity in a system. Feel free to leave a comment, below.</p>
+
+<p>Aaaaand as I completed this, that lovely chap Dan North just released <a href="https://www.youtube.com/watch?v=XqgwHXsQA1g" target="_blank">this presentation</a>. :-)</p>
+
+<p>Note: This is a modified cross post from one that originally appeared <a href="http://mikquinlan.com/2014/08/14/unnecessary-complexity/" target="_blank">here</a>.</p>
+
+<p><strong>About the author</strong>: Mik Quinlan is Director of Engineering - Mobile Advertising at Thinknear by Telenav. He has
+over 16 years experience architecting and implementing highly scalable, high throughput, low latency systems and
+has led several Agile transformations at various companies. Connect via <a href="https://www.linkedin.com/in/mikquinlan" target="_blank">LinkedIn</a>
+or <a href="https://twitter.com/mikquinlan" target="_blank">Twitter</a>.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Thinknear by Telenav</span></span>
+
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2014-08-22T17:20:18-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span></time>
+  
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.thinknear.com/blog/2014/08/22/unnecessary-complexity/" data-via="ThinknearEng" data-counturl="http://engineering.thinknear.com/blog/2014/08/22/unnecessary-complexity/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2014/08/20/welcome-to-thinknear-engineering/" title="Previous Post: Welcome to Thinknear Engineering">&laquo; Welcome to Thinknear Engineering</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2014/10/21/monitoring-beanstalk-with-collectd/" title="Next Post: Monitoring Beanstalk with collectd">Monitoring Beanstalk with collectd &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+  <aside class="sidebar">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/">Testing @ Thinknear - Part One: Technology Choices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/">Rails Migration and Dependencies on User Defined Tables/Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/09/interviewing-with-thinknear/">Interviewing With Thinknear</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+    
+  </aside>
+
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+    </footer>
+
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.thinknear.com/blog/2014/08/22/unnecessary-complexity/';
+        var disqus_url = 'http://engineering.thinknear.com/blog/2014/08/22/unnecessary-complexity/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+  </body>
+</html>

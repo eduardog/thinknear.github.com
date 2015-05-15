@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Understanding the Decision to Move From AWS EMR/Hive to Redshift - Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="At Thinknear we always want to make sure we are doing our best to use the right tool for the job. So when Redshift came out we decided to evaluate &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+
+  <body   >
+
+    <header role="banner">
+      <nav role="navigation">
+        <div class="container">
+  <a href="/"><img src="/images/thinknear_engineering_logo.png" alt="Thinknear Engineering" /></a>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+  <ul class="main-navigation">
+  <li><a href="//www.thinknear.com">Thinknear</a></li>
+  <li><a href="/values">About Us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="//www.thinknear.com/career">Careers</a></li>
+</ul>
+
+</div>
+
+      </nav>
+
+      <hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1>
+    <a href="/">
+      <img src="/images/thinknear_engineering_logo_pin.png" alt="Thinknear Engineering" />
+    </a>
+    Thinknear Engineering
+  </h1>
+  
+    <h2>Big Data, High Frequency</h2>
+  
+</hgroup>
+
+
+    </header>
+
+    <div id="main">
+      <div id="content">
+        <div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Understanding the Decision to Move From AWS EMR/Hive to Redshift</h1>
+    
+
+    
+      <p class="meta">
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-21T17:40:47-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>At Thinknear we always want to make sure we are doing our best to use the right tool for the job. So when Redshift came out we decided to evaluate our current reporting and analytics pipeline and see if Redshift could help us improve. At the time we were using Hive/Hadoop on EMR for all our reporting and analytics purposes. We saw Redshift as a way to speed up our reporting infrastructure without completely rearchitecting and give our business team a much easier way to access the data. Given these goals we evaluated Redshift against our current Hive/Hadoop solution and found the following pros and cons.</p>
+
+<p>Pros:</p>
+
+<ol>
+<li>Redshift is fast.
+
+<ul>
+<li>For a lot of our critical reporting jobs, once the data was loaded, jobs that were taking 10-30 minutes were down to the 1-2 minute range.</li>
+</ul>
+</li>
+<li>Ad-hoc analysis is easier.
+
+<ul>
+<li>The learning curve to use redshift is much less than hive/hadoop. For our business and data analysts it was often extra overhead to explain and understand hadoop clusters worked.</li>
+<li>Redshift has also been much less surprising so far. Hive has some limitations with more advanced queries that we have not seen with Redshift.</li>
+</ul>
+</li>
+</ol>
+
+
+<!-- more -->
+
+
+<ol>
+<li>No longer dealing with EMR/Hadoop versions
+
+<ul>
+<li>A lot of issues we had with EMR was with new versions of hadoop/EMR. Things would break with bad builds or different performance characteristics and they were often a pain to deal with. It seems with Redshift more of this is abstracted away and we haven’t had to deal with any of these types of issues.</li>
+</ul>
+</li>
+<li>Cost
+
+<ul>
+<li>For a lot of our Hive tasks we had to roll up our data in various ways (hourly, daily, weekly, etc.), before we could use it in our reports. This caused us to have a lot of clusters and was getting expensive. With redshift we can sometimes skip roll ups and the jobs are running much faster. It turned out that the costs were less for Redshift than hive for some of our reporting pipeline.</li>
+</ul>
+</li>
+</ol>
+
+
+<p>Cons:</p>
+
+<ol>
+<li>Redshift does not easily scale up for dynamic workloads.
+
+<ul>
+<li>The reporting pipeline at thinknear can fluctuate for large advertising days. With EMR we can spin up extra worker nodes to scale up easily. If Redshift becomes too slow or backed up due to high data or query volumes, adding nodes is very time consuming. Resizing is the most straight forward, but puts your cluster into read only mode for an extended period, which we can’t live with. This means that snapshotting and reloading our data is the only approach and that can be a multi day process for us.</li>
+</ul>
+</li>
+<li>Redshifts workload management does not fully solve the parallel job problem.
+
+<ul>
+<li>With EMR, running jobs in parallel is pretty safe, one job is not going to affect another job. Redshift has workload management which allows you to split workers into queues. These queues have limits on the amount of memory they can use but not the amount of CPU. A lot of our jobs are CPU intensive so this limits the amount of jobs we are able to run in parallel.</li>
+<li>Redshift is also limited by disk space for some queries. When running multiple jobs with big joins you may run into disk space limitations. To be fair this may be solvable by writing more efficient queries.</li>
+</ul>
+</li>
+<li>Loading data into your Redshift cluster takes time.
+
+<ul>
+<li>We have some jobs that run hourly and so we need data loaded into our cluster hourly. If we want to maintain acceptable performance we need to vacuum our data (Sidenote: Amazon docs say that you may not need to vacuum your data if you load it in sequential order, we saw performance improvements when we ran the Vacuum anyway). For us the overall time to load and run the queries were still faster than running Hive but it is still something to take into consideration.</li>
+</ul>
+</li>
+<li>With Redshift you have to define schemas with lengths and encodings.
+
+<ul>
+<li>In EMR you do not need to have encodings and lengths defined when dealing with data. You just define what it looks like in terms of data types and hive handles the rest. Redshift needs the encoding and lengths to be more efficient to be more efficient on disk space. This means you have some upfront costs to figure these things out before importing a table into redshift.</li>
+</ul>
+</li>
+<li>Redshift does not offer any custom function or array support.
+
+<ul>
+<li>We didn’t use a lot of custom functions in Hive (UDF/UDAF), but the ones we did use were very useful. Some of the data we wanted to analyze used arrays so in order to get it into redshift it required some pre-processing or ugly queries.</li>
+</ul>
+</li>
+<li>Redshift has a higher cost of failure
+
+<ul>
+<li>This is one we didn’t really think about until it happened to us. One of our clusters had a failure and they had to replace a node, causing a complete rebalance of data. This slows performance for an extended period of time (depending on how much data you have) and can become a major issue if you have critical processes running in Redshift. EMR would fail as well but the cost of booting up another cluster and running it was much less.</li>
+</ul>
+</li>
+</ol>
+
+
+<p>In the end we moved the processes that made the most sense to Redshift and left some on EMR. The real win was for our analytics team, we ended up moving a lot of our data onto a separate redshift cluster for them. They previously had some visual tools and would use Hive to dig deeper. The ease of using redshift really made them more productive and in turn allowed us to get rid of other services in favor of Redshift.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Thinknear by Telenav</span></span>
+
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-21T17:40:47-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.thinknear.com/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/" data-via="ThinknearEng" data-counturl="http://engineering.thinknear.com/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2015/01/07/advanced-angular-ui-router-part-i/" title="Previous Post: Advanced Angular UI Router Part I: Nested Views">&laquo; Advanced Angular UI Router Part I: Nested Views</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2015/03/09/interviewing-with-thinknear/" title="Next Post: Interviewing with Thinknear">Interviewing with Thinknear &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+  <aside class="sidebar">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/">Testing @ Thinknear - Part One: Technology Choices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/">Rails Migration and Dependencies on User Defined Tables/Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/09/interviewing-with-thinknear/">Interviewing With Thinknear</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+    
+  </aside>
+
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+    </footer>
+
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.thinknear.com/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/';
+        var disqus_url = 'http://engineering.thinknear.com/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+  </body>
+</html>

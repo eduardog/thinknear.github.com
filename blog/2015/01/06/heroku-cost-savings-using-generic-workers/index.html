@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Heroku Cost Optimization Using Generic Workers - Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="During the early days of Thinknear, Resque was the most prevalent background job processor for our Rails applications.
+However, Resque was not &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/blog/2015/01/06/heroku-cost-savings-using-generic-workers">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+
+  <body   >
+
+    <header role="banner">
+      <nav role="navigation">
+        <div class="container">
+  <a href="/"><img src="/images/thinknear_engineering_logo.png" alt="Thinknear Engineering" /></a>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+  <ul class="main-navigation">
+  <li><a href="//www.thinknear.com">Thinknear</a></li>
+  <li><a href="/values">About Us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="//www.thinknear.com/career">Careers</a></li>
+</ul>
+
+</div>
+
+      </nav>
+
+      <hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1>
+    <a href="/">
+      <img src="/images/thinknear_engineering_logo_pin.png" alt="Thinknear Engineering" />
+    </a>
+    Thinknear Engineering
+  </h1>
+  
+    <h2>Big Data, High Frequency</h2>
+  
+</hgroup>
+
+
+    </header>
+
+    <div id="main">
+      <div id="content">
+        <div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Heroku Cost Optimization Using Generic Workers</h1>
+    
+
+    
+      <p class="meta">
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-06T17:43:10-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>During the early days of Thinknear, <a href="https://github.com/resque/resque" target="_blank">Resque</a> was the most prevalent background job processor for our Rails applications.
+However, Resque was not multithread-friendly, and, as our applications grew, this put a toll on our Heroku monthly bill.</p>
+
+<p>We tried out <a href="http://sidekiq.org" target="_blank">Sidekiq</a>, really liked it, and now use it exclusively. Unlike Resque, Sidekiq supports multiple threads
+working on multiple jobs concurrently.
+According to Sidekiq&rsquo;s main developer, Mike Perham, one large Resque farm with a 68GB RAM footprint can be brought down to 1 GB RAM by using threads instead of processes.
+[<a href="https://github.com/mperham/sidekiq/wiki/Internals" target="_blank"><em>source</em></a>]</p>
+
+<!-- more -->
+
+
+<p>We analyzed the distribution of background jobs across dynos.
+We use a family of dynos for each queue, running up to 50 dynos per queue and different families being on for 750 hours per month at the low end, and up to to 40,000 hours
+per month at the high end.</p>
+
+<p>We utilize a home-grown type of autoscaling to dial up and down workers based on the jobs in the queue, since all dyno families needing it are background job focused.
+Its simplicity provided long-term reliability.</p>
+
+<p>While this setup fit the production processing needs, it was inefficient for non-production environments.
+With 19 always on dyno families, and 3 non-production environments (sandbox, test, and integration) used 24/7 for unit, contract level and end-to-end integration testing,
+something needed to change.</p>
+
+<p>Sidekiq supports assigning multiple queues to a single worker process. In non-production environments, we assigned every queue to a single, generic worker and
+noticed a couple of standard dynos are enough to process the non-production load.</p>
+
+<p>As a result, we&rsquo;re now saving 90-95% on the Heroku bill of development and testing environments.</p>
+
+<p>Sample Procfile:</p>
+
+<p><code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code><br/>
+<code>clock: bundle exec clockwork config/clock.rb</code></p>
+
+<p><code>core_worker: bundle exec sidekiq -c 1 -q core</code><br/>
+<code>creator_worker: bundle exec sidekiq -c 1 -q creator</code><br/>
+<code>emr_worker: bundle exec sidekiq -c 1 -q emr</code><br/>
+<code>maintenance_worker: bundle exec sidekiq -c 1 -q maintenance</code><br/>
+<code>measure_worker: bundle exec sidekiq -c 1 -q measure</code></p>
+
+<p><code>generic_worker: bundle exec sidekiq -c 1 -q core -q creator -q emr -q maintenance -q measure</code></p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ciprian Costin</span></span>
+
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-06T17:43:10-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.thinknear.com/blog/2015/01/06/heroku-cost-savings-using-generic-workers/" data-via="ThinknearEng" data-counturl="http://engineering.thinknear.com/blog/2015/01/06/heroku-cost-savings-using-generic-workers/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2014/11/25/presenting-at-reinvent/" title="Previous Post: Presenting at re:Invent">&laquo; Presenting at re:Invent</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2015/01/07/advanced-angular-ui-router-part-i/" title="Next Post: Advanced Angular UI Router Part I: Nested Views">Advanced Angular UI Router Part I: Nested Views &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+  <aside class="sidebar">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/">Testing @ Thinknear - Part One: Technology Choices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/">Rails Migration and Dependencies on User Defined Tables/Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/09/interviewing-with-thinknear/">Interviewing With Thinknear</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+    
+  </aside>
+
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+    </footer>
+
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.thinknear.com/blog/2015/01/06/heroku-cost-savings-using-generic-workers/';
+        var disqus_url = 'http://engineering.thinknear.com/blog/2015/01/06/heroku-cost-savings-using-generic-workers/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+  </body>
+</html>

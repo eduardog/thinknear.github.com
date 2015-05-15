@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rails Migration and Dependencies on User Defined Tables/Views - Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="Thinknear Engineering values reporting because it allows us to monitor how our mobile advertising platform behaves in its real time bidding &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+
+  <body   >
+
+    <header role="banner">
+      <nav role="navigation">
+        <div class="container">
+  <a href="/"><img src="/images/thinknear_engineering_logo.png" alt="Thinknear Engineering" /></a>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+  <ul class="main-navigation">
+  <li><a href="//www.thinknear.com">Thinknear</a></li>
+  <li><a href="/values">About Us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="//www.thinknear.com/career">Careers</a></li>
+</ul>
+
+</div>
+
+      </nav>
+
+      <hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1>
+    <a href="/">
+      <img src="/images/thinknear_engineering_logo_pin.png" alt="Thinknear Engineering" />
+    </a>
+    Thinknear Engineering
+  </h1>
+  
+    <h2>Big Data, High Frequency</h2>
+  
+</hgroup>
+
+
+    </header>
+
+    <div id="main">
+      <div id="content">
+        <div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Rails Migration and Dependencies on User Defined Tables/Views</h1>
+    
+
+    
+      <p class="meta">
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-03-30T10:47:39-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Thinknear Engineering values reporting because it allows us to monitor how our mobile advertising platform behaves in its <a href="http://en.wikipedia.org/wiki/Real-time_bidding">real time bidding</a> environment.
+We also value business intelligence, because it gives Thinknear&rsquo;s operations and data science teams a tool to perform analytics and fine tune our marketing platform to ensure it meets our customers' needs and exceeds their expectations.</p>
+
+<p>To this purpose, we are using <a href="http://aws.amazon.com/redshift/">AWS' Amazon Redshift</a> as the main tool of our BI stack and we handle data loads and migrations through our <a href="http://rubyonrails.org/">Ruby on Rails</a> applications.
+Being a BI tool, our redshift clusters need to accommodate tables and views created not only by our applications but by our operations and data science teams, as well.
+It is quite common for user defined tables and views to rely on application defined tables and views, which makes migrations a challenge.</p>
+
+<p>In the following post, we present two SQL queries that are useful when trying to identify dependencies before running migrations.</p>
+
+<h2>Find locks held by running queries</h2>
+
+<p>Queries ran by users can hold locks on tables that the migration might operate on.
+If a user query holds a lock on a table that is bound to change by a migration, the migration will hang until the user query finishes (which in our case can sometimes be several hours).
+Empirically, we have found that querying the catalog view <a href="http://www.postgresql.org/docs/9.4/static/view-pg-locks.html">PG_LOCKS</a> for finding existing locks tends to be more accurate than querying the <a href="http://docs.aws.amazon.com/redshift/latest/dg/r_STV_LOCKS.html">STV_LOCKS</a> table.
+Based on that, the following query returns all the locks on database objects (in any schema) in a redshift cluster.</p>
+
+<pre><code>SELECT getdate(),
+c.relname,
+n.nspname,
+l.database,
+l.transaction,
+l.pid,
+a.usename,
+l.mode,
+l.granted
+FROM pg_catalog.pg_locks l
+JOIN pg_catalog.pg_class c ON c.oid = l.relation
+JOIN  pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_catalog.pg_stat_activity a ON a.procpid = l.pid;
+</code></pre>
+
+<p>In the query above:</p>
+
+<ol>
+<li><code>getdate()</code> is the current timestamp. <a href="http://docs.aws.amazon.com/redshift/latest/dg/r_GETDATE.html">See GETDATE documentation</a></li>
+<li><code>c.relname</code> is the name of the table or view the lock is held on.</li>
+<li><code>n.nspname</code> is the name of the schema that the table or view belongs to.</li>
+<li><code>l.database</code> is the current database id or a special value as described in <a href="http://www.postgresql.org/docs/9.4/static/view-pg-locks.html">PG_LOCKS table documentation</a>.</li>
+<li><code>l.transaction</code> is the transaction the query belongs to.</li>
+<li><code>l.pid</code> is the pid of the query that obtained the lock.</li>
+<li><code>a.usename</code> is the name of the user that issued the query that holds the lock.</li>
+<li><code>l.mode</code> is the lock type (e.g. AccessShareLock).</li>
+<li><code>l.granted</code> is true or false if the lock was granted or not.</li>
+</ol>
+
+
+<p>This query is slightly better than the one provided in the <a href="http://docs.aws.amazon.com/redshift/latest/dg/r_STV_LOCKS.html">STV_LOCKS example</a> since it will give the username and table or view name out of the box.
+As a result, the engineer who runs the migration knows which table or view might be an impediment and they would also know who to talk to, before running the migration.</p>
+
+<h2>Find dependencies for a specific column</h2>
+
+<p>One type of potential dependency between user defined objects and application defined ones could be a <em>foreign key</em> constraint.
+This type of constraint can be found using the query mentioned <a href="http://stackoverflow.com/a/1152321">here</a>.
+However, there are different types of dependencies apart from <em>foreign key</em> constraints.</p>
+
+<p>An example of such direct dependency is a user defined view that is built up by columns of application defined table(s).
+Imagine there is a table called <code>orders</code> that is partitioned monthly in the redshift database.
+Now, let us assume that the operations team wants to create views that gather all orders to produce quarterly reports.
+As a result, one of these quarterly views might be defined by the operations team like this:</p>
+
+<pre><code>CREATE VIEW orders_2015_Q1 AS 
+    SELECT column_name1, column_name2... from orders_201501 UNION ALL
+    SELECT column_name1, column_name2... from orders_201502 UNION ALL
+    SELECT column_name1, column_name2... from orders_201503 UNION ALL
+    SELECT column_name1, column_name2... from orders_201504;
+</code></pre>
+
+<p>This view does not have a foreign key constraint to any of the four partitions of the orders table it uses.
+However, it has a dependency on the columns of those partitions.
+If a migration wants to drop or alter the type of any of columns <code>column_name1,column_name2...</code>, the migration will fail.
+In the case of a drop column, a <code>cascade</code> clause can be used to drop the column to all dependent objects.
+Since the tables or views that reference the altered columns might be user defined, we need to ensure it is safe to use the <code>cascade</code> clause before running the migration.</p>
+
+<p>The following query can be used to spot dependencies like the one explained above:</p>
+
+<pre><code>SELECT distinct dependee.relname   
+FROM pg_depend   
+JOIN pg_rewrite ON pg_depend.objid = pg_rewrite.oid   
+JOIN pg_class as dependee ON pg_rewrite.ev_class = dependee.oid   
+JOIN pg_class as dependent ON pg_depend.refobjid = dependent.oid   
+JOIN pg_attribute ON pg_depend.refobjid = pg_attribute.attrelid   
+AND pg_depend.refobjsubid = pg_attribute.attnum   
+WHERE dependent.relname = 'orders_201503'  
+AND pg_attribute.attnum &gt; 0   
+AND pg_attribute.attname = 'column_name1';   
+</code></pre>
+
+<p>The query above will find any database objects (tables, views) that use column <code>column_name1</code> from table <code>orders_201503</code>.</p>
+
+<p>Alternatively to using a <code>cascade</code> clause, one might want to drop the <code>orders_2015_Q1</code> view and restore it after the migration has finished.
+The definition of a view can be found before the migration:</p>
+
+<pre><code>SELECT definition FROM pg_views WHERE viewname='orders_2015_Q1';
+</code></pre>
+
+<p>After the migration, the view can be restored using the new types of columns or omitting columns that were dropped.</p>
+
+<h2>Handle everything in the application</h2>
+
+<p>Obviously, the best approach is to strive for having only application code handle the schema definition in your BI database.
+If operations and data science are heavily using a view or table created outside of the application, then that view or table needs to be part of the application defined schema.
+However, there are cases where that is not efficient, since SQL proficient data scientists can quickly write SQL code to perform their analysis without having to request the product development team for a migration.
+In the end, it&rsquo;s a trade-off that the engineering team needs to measure, but if the schema can be manipulated by both users and the application, then the queries presented above can help identify potential migration problems in advance.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Tassos Livogiannis</span></span>
+
+        
+  
+
+
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-03-30T10:47:39-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+  
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/" data-via="ThinknearEng" data-counturl="http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2015/03/09/interviewing-with-thinknear/" title="Previous Post: Interviewing with Thinknear">&laquo; Interviewing with Thinknear</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/" title="Next Post: Testing @ Thinknear - Part One: Technology Choices">Testing @ Thinknear - Part One: Technology Choices &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+  <aside class="sidebar">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/23/testing-at-thinknear-part-one-technology-choices/">Testing @ Thinknear - Part One: Technology Choices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/">Rails Migration and Dependencies on User Defined Tables/Views</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/09/interviewing-with-thinknear/">Interviewing With Thinknear</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+    
+  </aside>
+
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+    </footer>
+
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/';
+        var disqus_url = 'http://engineering.thinknear.com/blog/2015/03/30/rails-migration-and-dependencies-on-user-defined-tables-slash-views/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+  </body>
+</html>

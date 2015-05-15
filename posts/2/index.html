@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Thinknear Engineering</title>
+  <meta name="author" content="Thinknear by Telenav">
+
+  
+  <meta name="description" content="Understanding the Decision to Move From AWS EMR/Hive to Redshift Jan 21st, 2015 At Thinknear we always want to make sure we are doing our best to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.thinknear.com/posts/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Thinknear Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+
+  <body   >
+
+    <header role="banner">
+      <nav role="navigation">
+        <div class="container">
+  <a href="/"><img src="/images/thinknear_engineering_logo.png" alt="Thinknear Engineering" /></a>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:engineering.thinknear.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+  <ul class="main-navigation">
+  <li><a href="//www.thinknear.com">Thinknear</a></li>
+  <li><a href="/values">About Us</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="//www.thinknear.com/career">Careers</a></li>
+</ul>
+
+</div>
+
+      </nav>
+
+      <hgroup>
+<!-- <h1><a href="/">Thinknear Engineering</a></h1> -->
+  <h1>
+    <a href="/">
+      <img src="/images/thinknear_engineering_logo_pin.png" alt="Thinknear Engineering" />
+    </a>
+    Thinknear Engineering
+  </h1>
+  
+    <h2>Big Data, High Frequency</h2>
+  
+</hgroup>
+
+
+    </header>
+
+    <div id="main">
+      <div id="content">
+        <div class="blog-index">
+  
+  
+  
+    <article class="">
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Understanding the Decision to Move From AWS EMR/Hive to Redshift</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+  
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-21T17:40:47-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span></time>
+    
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content ">
+    <p>At Thinknear we always want to make sure we are doing our best to use the right tool for the job. So when Redshift came out we decided to evaluate our current reporting and analytics pipeline and see if Redshift could help us improve. At the time we were using Hive/Hadoop on EMR for all our reporting and analytics purposes. We saw Redshift as a way to speed up our reporting &hellip;
+  </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/01/21/understanding-the-decision-to-move-from-aws-emr-slash-hive-to-redshift/">Keep Reading</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article class="">
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Advanced Angular UI Router Part I: Nested Views</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+  
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-07T13:18:03-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+    
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content ">
+    <p>At ThinkNear, we have an in-house administrative dashboard that our ad operations team uses to set up and manage ad campaigns. The dashboard is an AngularJS frontend with a Ruby on Rails backend, with the <a href="https://github.com/angular-ui/ui-router">ui-router</a> plugin for permalinks and navigation. While ngNewsletter&rsquo;s <a href="http://www.ng-newsletter.com/posts/angular-ui-router.html">Diving deep into the AngularUI Router</a> was a helpful primer, while creating the system we found it didn&rsquo;t go deep enough. This post describes how we &hellip;
+  </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/01/07/advanced-angular-ui-router-part-i/">Keep Reading</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article class="">
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/06/heroku-cost-savings-using-generic-workers/">Heroku Cost Optimization Using Generic Workers</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+  
+
+
+
+
+
+
+    <time class='entry-date' datetime='2015-01-06T17:43:10-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span></time>
+    
+  
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content ">
+    <p>During the early days of Thinknear, <a href="https://github.com/resque/resque" target="_blank">Resque</a> was the most prevalent background job processor for our Rails applications. However, Resque was not multithread-friendly, and, as our applications grew, this put a toll on our Heroku monthly bill.</p> <p>We tried out <a href="http://sidekiq.org" target="_blank">Sidekiq</a>, really liked it, and now use it exclusively. Unlike Resque, Sidekiq supports multiple threads working on multiple jobs concurrently. According to Sidekiq&rsquo;s main developer, Mike Perham, &hellip;
+  </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/01/06/heroku-cost-savings-using-generic-workers/">Keep Reading</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/3">&larr; Older</a>
+    
+
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/index.html">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+  <a class="twitter-timeline" href="https://twitter.com/ThinknearEng" data-widget-id="570384623377453056">Tweets by @ThinknearEng</a>
+
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+
+</aside>
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <p>
+  Copyright &copy; 2015 - Thinknear by Telenav -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+    </footer>
+
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinknearengineering';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+  </body>
+</html>

@@ -35,6 +35,13 @@ One time set up:
 rake setup_github_pages
 ```
 
+If setting up a blog that is preexisting:
+
+```shell
+rm -rf _deploy
+git clone -b master git@github.com:ThinkNear/thinknear.github.com.git _deploy
+```
+
 Then each time you want to deploy:
 
 ```shell
